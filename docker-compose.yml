@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  build:
+    build:
+      context: .
+      cache_from:
+        - codewar-build
+      target: build
+    image: codewar-build
+
+  app:
+    build:
+      context: .
+      cache_from:
+        - codewar-build
+        - codewar
+      target: app
+    image: codewar
