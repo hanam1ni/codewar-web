@@ -24,8 +24,10 @@ defmodule CodewarWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
+
       import CodewarWeb.ConnCase
       import Codewar.Factory
+      import Mimic
 
       alias CodewarWeb.Router.Helpers, as: Routes
 
