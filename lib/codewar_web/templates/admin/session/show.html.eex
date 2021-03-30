@@ -1,0 +1,11 @@
+<div class="navigation-bar">
+  <%= link "Back", to: Routes.dashboard_path(@conn, :index), class: "navigation-bar__link navigation-bar__link--back" %>
+</div>
+
+<header class="header-content">
+  <h2><%= @session.name %></h2>
+
+  <div class="header-content__action">
+    <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--link" %>
+  </div>
+</header>

@@ -1,0 +1,13 @@
+<header class="header-admin">
+  <div class="header-admin__container">
+    <div class="header-admin__name">Code War</div>
+
+    <nav class="header-admin__navigation navigation-admin">
+      <ul class="navigation-admin__list">
+        <li class="navigation-admin__item">
+          <%= link "Competitions", to: Routes.dashboard_path(@conn, :index), class: "navigation-admin__link" %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

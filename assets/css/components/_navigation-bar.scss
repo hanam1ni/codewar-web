@@ -1,0 +1,36 @@
+.navigation-bar {
+  display: flex;
+  align-items: start;
+
+  height: rem(40px);
+
+  border-bottom: 1px solid var(--cw-color-gray-primary);
+
+  &__link {
+
+    text-decoration: none;
+
+    &, &:hover {
+      color: $base-font-color;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__link--back {
+    --icon-spacing: 20px;
+
+    display: block;
+    position: relative;
+
+    text-indent: var(--icon-spacing);
+
+    &:before {
+      content: '<';
+      position: absolute;
+      left: calc(-1 * var(--icon-spacing));
+    }
+  }
+}

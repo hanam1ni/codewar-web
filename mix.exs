@@ -47,6 +47,7 @@ defmodule Codewar.MixProject do
       {:excoveralls, "~> 0.14.0", [only: :test]},
       {:dialyxir, "~> 1.1.0", [only: [:dev], runtime: false]},
       {:credo, "~> 1.5.5", [only: [:dev, :test], runtime: false]},
+      {:faker, "~> 0.16.0", [only: :test]},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},

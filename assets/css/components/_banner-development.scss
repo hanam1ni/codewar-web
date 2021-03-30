@@ -1,0 +1,16 @@
+.banner-development {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  padding: 3px 0;
+
+  font-size: map-get($font-sizes, 'xs');
+  text-align: center;
+
+  background: map-get($color-blue, 'primary');
+
+  &, > a {
+    color: #fff;
+  }
+}

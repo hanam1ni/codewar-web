@@ -1,0 +1,16 @@
+.navigation-admin {
+  &__list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    font-size: map-get($font-sizes, 'md');
+    font-weight: 600;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+}

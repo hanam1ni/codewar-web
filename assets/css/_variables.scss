@@ -34,23 +34,6 @@ $grid-gutter-width: 30px;
 
 // Grid
 
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1440px
-);
-
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  xxl: 1380px
-);
-
 $zIndex: (
   behind: -1,
   default: 1,
@@ -73,9 +56,15 @@ $font-sizes: (
   xl: 1.375rem
 );
 
+$base-font-size: map-get($font-sizes, 'default');
+$base-line-height: 1.7;
+$base-font-color: map-get($color-brand, 'primary');
+
+$base-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+
 // Bootstrap Configuration
 
-$primary: map-get($color-red, 'primary');
+$primary: map-get($color-blue, 'primary');
 $secondary: map-get($color-brand, 'lighter');
 
 $link-color: map-get($color-brand, 'lightest');

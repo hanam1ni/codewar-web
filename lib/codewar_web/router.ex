@@ -1,21 +1,22 @@
 defmodule CodewarWeb.Router do
   use CodewarWeb, :router
 
+  alias CodewarWeb.Plugs.SetLayoutClassName
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug :fetch_flash
     plug :fetch_live_flash
     plug :put_root_layout, {CodewarWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
-  # coveralls-ignore-start
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :admin do
+    plug SetLayoutClassName, {:class_name, "admin"}
+    plug :put_layout, {CodewarWeb.LayoutView, :admin}
   end
-
-  # coveralls-ignore-stop
 
   scope "/", CodewarWeb do
     pipe_through :browser
@@ -23,10 +24,12 @@ defmodule CodewarWeb.Router do
     live "/", PageLive, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CodewarWeb do
-  #   pipe_through :api
-  # end
+  scope "/admin/", CodewarWeb do
+    pipe_through [:browser, :admin]
+
+    get "/", Admin.DashboardController, :index
+    resources "/sessions", Admin.SessionController, except: [:index]
+  end
 
   # Enables LiveDashboard only for development
   #

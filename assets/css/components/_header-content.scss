@@ -1,0 +1,14 @@
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: rem(60px);
+
+  h2 {
+    margin-bottom: 0;
+
+    font-size: rem(17px);
+    font-weight: bold;
+  }
+}

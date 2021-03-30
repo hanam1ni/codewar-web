@@ -1,0 +1,9 @@
+<%= render CodewarWeb.Admin.SharedView, "_header.html", assigns %>
+
+<main class="main-admin" role="main">
+  <div class="main-admin__container">
+    <%= render "_flash.html", assigns %>
+
+    <%= @inner_content %>
+  </div>
+</main>

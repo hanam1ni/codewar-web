@@ -1,0 +1,17 @@
+.alert {
+  &:empty {
+    display: none;
+  }
+
+  &--danger {
+    @extend .alert-danger;
+  }
+
+  &--info {
+    @extend .alert-info;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
