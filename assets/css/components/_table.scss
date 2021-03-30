@@ -1,0 +1,33 @@
+.table {
+  margin: 0;
+
+  td, th {
+    vertical-align: middle;
+  }
+
+  th {
+    font-size: map-get($font-sizes, 'xs');
+    color: var(--cw-color-brand-dark);
+    text-transform: uppercase;
+
+    background: $table-striped-bg;
+    border: none;
+  }
+
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+}
+
+.table--full-width {
+  tr > th:first-child,
+  tr > td:first-child {
+    padding-left: $grid-gutter-width * 0.85;
+  }
+
+  tr > th:last-child,
+  tr > td:last-child {
+    padding-right: $grid-gutter-width * 0.85;
+  }
+}

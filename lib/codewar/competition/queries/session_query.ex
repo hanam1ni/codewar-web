@@ -9,7 +9,9 @@ defmodule Codewar.Competition.Queries.SessionQuery do
   alias Codewar.Competition.Schemas.Session
 
   def list do
-    Repo.all(Session)
+    Session
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
   end
 
   def get!(id), do: Repo.get!(Session, id)

@@ -5,6 +5,11 @@
     background: #fff;
     border-radius: $border-radius-sm;
     box-shadow: $base-box-shadow;
+
+    &--full-width {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   &__footer {

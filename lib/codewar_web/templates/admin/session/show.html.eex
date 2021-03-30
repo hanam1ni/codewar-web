@@ -6,6 +6,6 @@
   <h2><%= @session.name %></h2>
 
   <div class="header-content__action">
-    <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--link" %>
+    <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
   </div>
 </header>

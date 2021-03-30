@@ -1,7 +1,7 @@
 defmodule CodewarWeb.Admin.SessionRequestTest do
   use CodewarWeb.ConnCase, async: true
 
-  describe "new/2" do
+  describe "get new/2" do
     test "responds with 200 status", %{conn: conn} do
       conn = get(conn, Routes.session_path(conn, :new))
 
@@ -27,7 +27,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "show/2" do
+  describe "get show/2" do
     test "responds with 200 status given a valid session", %{conn: conn} do
       session = insert(:session, name: "Test Session")
 
@@ -37,7 +37,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "edit/2" do
+  describe "get edit/2" do
     test "responds with 200 status given a valid session", %{conn: conn} do
       session = insert(:session)
 
@@ -47,7 +47,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "update/2" do
+  describe "patch update/2" do
     test "responds with 302 redirect status given valid data", %{conn: conn} do
       session = insert(:session, name: "Test session")
       valid_attrs = %{name: "Updated test session"}
@@ -67,7 +67,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "delete/2" do
+  describe "delete delete/2" do
     test "responds with 302 redirect status", %{conn: conn} do
       session = insert(:session)
 

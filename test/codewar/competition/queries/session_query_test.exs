@@ -5,10 +5,11 @@ defmodule Codewar.Competition.Queries.SessionQueryTest do
   alias Codewar.Competition.Schemas.Session
 
   describe "list/0" do
-    test "returns all sessions" do
-      session = insert(:session)
+    test "returns all sessions in descending order of creation" do
+      first_session = insert(:session)
+      second_session = insert(:session, inserted_at: NaiveDateTime.add(NaiveDateTime.utc_now(), 1))
 
-      assert SessionQuery.list() == [session]
+      assert SessionQuery.list() == [second_session, first_session]
     end
   end
 

@@ -1,11 +1,25 @@
 .button {
   @extend .btn;
 
+  // Variant Modifiers
   &--primary {
     @extend .btn-primary;
   }
 
+  &--secondary {
+    @extend .btn-secondary;
+  }
+
+  &--outline-secondary {
+    @extend .btn-outline-secondary;
+  }
+
   &--link {
     @extend  .btn-link;
+  }
+
+  // Size Modifiers
+  &--sm {
+    @extend  .btn-sm;
   }
 }
