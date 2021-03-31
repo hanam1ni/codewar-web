@@ -1,0 +1,55 @@
+body {
+  color: $base-font-color;
+  font-size: map-get($font-sizes, 'md');
+
+  @include media-breakpoint-up('lg') {
+    font-size: $base-font-size;
+  }
+}
+
+::-moz-selection {
+  color: #fff;
+  background: map-get($color-brand, 'light');
+}
+
+::selection {
+  color: #fff;
+  background: map-get($color-brand, 'lighter');
+}
+
+pre {
+  overflow: auto;
+  padding: $spacer / 2;
+
+  font-size: map-get($font-sizes, 'md');
+  white-space: pre-wrap;
+
+  background: var(--cw-color-gray-light);
+  border-radius: $border-radius;
+}
+
+blockquote {
+  padding: 0 ($spacer / 2) 0 $spacer;
+  position: relative;
+  font-style: italic;
+
+  &:before {
+    content: '';
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--cw-color-gray-darkest);
+  }
+
+  p:last-of-type {
+    margin: 0;
+  }
+
+  cite {
+    display: block;
+    margin-top: $spacer / 2;
+    font-style: normal;
+  }
+}

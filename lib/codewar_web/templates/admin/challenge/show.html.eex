@@ -1,0 +1,37 @@
+<div class="navigation-bar">
+  <%= link "Back", to: Routes.session_path(@conn, :show, @challenge.session_id), class: "navigation-bar__link navigation-bar__link--back" %>
+</div>
+
+<section class="challenge-info">
+  <header class="header-content">
+    <h2><%= @challenge.name %></h2>
+
+    <div class="header-content__action">
+      <%= link "Edit", to: Routes.challenge_path(@conn, :edit, @challenge), class: "button button--secondary button--sm" %>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="card__body">
+      <h3><%= gettext "Requirement" %></h3>
+      <div class="challenge-info__content">
+        <%= raw(to_markdown(@challenge.requirement)) %>
+      </div>
+
+      <h3><%= gettext "Hint" %></h3>
+      <div class="challenge-info__content">
+        <%= raw(to_markdown(@challenge.hint)) %>
+      </div>
+
+      <h3><%= gettext "Answer" %></h3>
+      <div class="challenge-info__content">
+        <p><%= @challenge.answer %></p>
+      </div>
+
+      <h3><%= gettext "Submission Cap" %></h3>
+      <div class="challenge-info__content">
+        <span><%= @challenge.submission_cap %></span>
+      </div>
+    </div>
+  </div>
+</section>

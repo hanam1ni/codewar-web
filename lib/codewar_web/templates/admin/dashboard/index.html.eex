@@ -1,5 +1,5 @@
 <header class="header-content">
-  <h2>Sessions</h2>
+  <h2><%= gettext "Sessions" %></h2>
 
   <div class="header-content">
     <span><%= link "New Session", to: Routes.session_path(@conn, :new), class: "button button--secondary button--sm" %></span>
@@ -8,10 +8,15 @@
 
 <div class="card">
   <div class="card__body card__body--full-width">
+    <%= if Enum.empty?(@sessions) do %>
+    <div class="blank-state">
+      <p class="blank-state__text"><%= gettext "No sessions" %></p>
+    </div>
+    <% else %>
     <table class="table table--full-width">
       <thead>
         <tr>
-          <th>Name</th>
+          <th><%= gettext "Name" %></th>
           <th></th>
         </tr>
       </thead>
@@ -26,5 +31,6 @@
       <% end %>
       </tbody>
     </table>
+    <% end %>
   </div>
 </div>

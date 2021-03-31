@@ -28,7 +28,12 @@ defmodule CodewarWeb.Router do
     pipe_through [:browser, :admin]
 
     get "/", Admin.DashboardController, :index
-    resources "/sessions", Admin.SessionController, except: [:index]
+
+    resources "/challenges", Admin.ChallengeController, except: [:index, :new, :create]
+
+    resources "/sessions", Admin.SessionController, except: [:index] do
+      resources "/challenges", Admin.ChallengeController, only: [:new, :create]
+    end
   end
 
   # Enables LiveDashboard only for development

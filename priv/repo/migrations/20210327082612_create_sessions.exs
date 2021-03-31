@@ -10,7 +10,5 @@ defmodule Codewar.Repo.Migrations.CreateSessions do
 
       timestamps()
     end
-
-    create unique_index(:sessions, [:id])
   end
 end

@@ -6,6 +6,7 @@ defmodule Codewar.Competition.Queries.SessionQuery do
   import Ecto.Query, warn: false
   alias Codewar.Repo
 
+  alias Codewar.Competition.Schemas.Challenge
   alias Codewar.Competition.Schemas.Session
 
   def list do
@@ -14,7 +15,13 @@ defmodule Codewar.Competition.Queries.SessionQuery do
     |> Repo.all()
   end
 
-  def get!(id), do: Repo.get!(Session, id)
+  def get!(id) do
+    challenge_query = from(c in Challenge, order_by: [asc: c.inserted_at])
+
+    Session
+    |> preload(challenges: ^challenge_query)
+    |> Repo.get!(id)
+  end
 
   def create(attrs \\ %{}) do
     %Session{}

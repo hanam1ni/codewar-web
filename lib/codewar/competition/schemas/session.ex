@@ -6,12 +6,16 @@ defmodule Codewar.Competition.Schemas.Session do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Codewar.Competition.Schemas.Challenge
+
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
   schema "sessions" do
     field :name, :string
     field :started_at, :naive_datetime
     field :completed_at, :naive_datetime
+
+    has_many :challenges, Challenge
 
     timestamps()
   end

@@ -2,10 +2,43 @@
   <%= link "Back", to: Routes.dashboard_path(@conn, :index), class: "navigation-bar__link navigation-bar__link--back" %>
 </div>
 
-<header class="header-content">
-  <h2><%= @session.name %></h2>
+<section class="session-info">
+  <header class="header-content">
+    <h2><%= @session.name %></h2>
 
-  <div class="header-content__action">
-    <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
+    <div class="header-content__action">
+      <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
+
+      <%= link "New Challenge", to: Routes.session_challenge_path(@conn, :new, @session), class: "button button--secondary button--sm" %>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="card__body card__body--full-width">
+      <%= if Enum.empty?(@session.challenges) do %>
+      <div class="blank-state">
+        <p class="blank-state__text"><%= gettext "No challenges" %></p>
+      </div>
+      <% else %>
+      <table class="table table--full-width">
+        <thead>
+        <tr>
+          <th><%= gettext "Name" %></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%= for challenge <- @session.challenges do %>
+        <tr>
+          <td><%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge) %></td>
+          <td>
+            <%= link "Delete", to: Routes.challenge_path(@conn, :delete, challenge), method: :delete, class: "button button--outline-secondary button--sm", data: [confirm: "Are you sure?"] %>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
   </div>
-</header>
+</section>

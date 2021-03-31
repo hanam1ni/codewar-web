@@ -1,0 +1,62 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here as no
+## effect: edit them in PO (.po) files instead.
+msgid ""
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/dashboard/index.html.eex:13
+msgid "No sessions"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/live/page_live.html.leex:2
+msgid "Welcome to %{name}!"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/dashboard/index.html.eex:19
+#: lib/codewar_web/templates/admin/session/show.html.eex:26
+msgid "Name"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/dashboard/index.html.eex:2
+msgid "Sessions"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:26
+msgid "Answer"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:21
+msgid "Hint"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/session/show.html.eex:20
+msgid "No challenges"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:16
+msgid "Requirement"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:31
+msgid "Submission Cap"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:4
+msgid "No hint"
+msgstr ""
