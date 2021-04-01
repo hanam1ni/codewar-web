@@ -12,6 +12,24 @@ defmodule Codewar.Competition.Queries.ChallengeQueryTest do
     end
   end
 
+  describe "get_active/0" do
+    test "returns the started but not yet completed challenge" do
+      challenge = insert(:challenge, started_at: NaiveDateTime.utc_now(), completed_at: nil)
+
+      assert ChallengeQuery.get_active() == challenge
+    end
+
+    test "does NOT return completed challenges" do
+      _completed_challenge =
+        insert(:challenge,
+          started_at: NaiveDateTime.utc_now(),
+          completed_at: NaiveDateTime.utc_now()
+        )
+
+      assert ChallengeQuery.get_active() == nil
+    end
+  end
+
   describe "create/1" do
     test "creates a challenge given valid data" do
       session = insert(:session)

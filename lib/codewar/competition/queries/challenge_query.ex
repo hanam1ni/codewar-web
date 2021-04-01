@@ -10,6 +10,13 @@ defmodule Codewar.Competition.Queries.ChallengeQuery do
 
   def get!(id), do: Repo.get!(Challenge, id)
 
+  def get_active do
+    Challenge
+    |> where([c], not is_nil(c.started_at))
+    |> where([c], is_nil(c.completed_at))
+    |> Repo.one()
+  end
+
   def create(attrs \\ %{}) do
     %Challenge{}
     |> Challenge.create_changeset(attrs)

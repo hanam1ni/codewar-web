@@ -23,6 +23,13 @@ defmodule Codewar.Competition.Queries.SessionQuery do
     |> Repo.get!(id)
   end
 
+  def get_active do
+    Session
+    |> where([s], not is_nil(s.started_at))
+    |> where([s], is_nil(s.completed_at))
+    |> Repo.one()
+  end
+
   def create(attrs \\ %{}) do
     %Session{}
     |> Session.changeset(attrs)

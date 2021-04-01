@@ -21,7 +21,7 @@ defmodule CodewarWeb.Router do
   scope "/", CodewarWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", Home.IndexLive, :index, as: :home
   end
 
   scope "/admin/", CodewarWeb do

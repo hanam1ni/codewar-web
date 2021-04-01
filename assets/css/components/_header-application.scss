@@ -1,0 +1,17 @@
+.header-application {
+  background: #fff;
+  border-bottom: 1px solid map-get($color-gray, 'primary');
+  box-shadow: $base-box-shadow;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+  }
+
+  &__text {
+    margin: 0;
+  }
+}

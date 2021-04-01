@@ -18,6 +18,14 @@ defmodule Codewar.Competition.Competitions do
     SessionQuery.get!(id)
   end
 
+  def get_active_challenge do
+    ChallengeQuery.get_active()
+  end
+
+  def get_active_session do
+    SessionQuery.get_active()
+  end
+
   def create_challenge(attrs \\ %{}) do
     ChallengeQuery.create(attrs)
   end

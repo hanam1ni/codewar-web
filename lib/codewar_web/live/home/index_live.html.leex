@@ -1,0 +1,24 @@
+<header class="header-application">
+  <div class="header-application__container">
+    <%= if Enum.empty?(@current_session) do %>
+    <h1 class="header-application__text">Code War</h1>
+    <% else %>
+    <h1 class="header-application__text"><%= @current_session.name %></h1>
+    <% end %>
+  </div>
+</header>
+
+<main class="main-application" role="main">
+  <div class="main-application__container">
+  <%= if Enum.empty?(@current_session) do %>
+    <div class="blank-state">
+      <p class="blank-state__text">No active competition. Check back later.</p>
+    </div>
+  <% else %>
+    <%= if Enum.empty?(@current_challenge) do %>
+      <%= live_component(@socket, CodewarWeb.Home.Spinner, assigns) %>
+    <% else %>
+    <% end %>
+  <% end %>
+  </div>
+</main>

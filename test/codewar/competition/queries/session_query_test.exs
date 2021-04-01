@@ -21,6 +21,21 @@ defmodule Codewar.Competition.Queries.SessionQueryTest do
     end
   end
 
+  describe "get_active/0" do
+    test "returns the started but not yet completed session" do
+      session = insert(:session, started_at: NaiveDateTime.utc_now(), completed_at: nil)
+
+      assert SessionQuery.get_active() == session
+    end
+
+    test "does NOT return completed sessions" do
+      _completed_session =
+        insert(:session, started_at: NaiveDateTime.utc_now(), completed_at: NaiveDateTime.utc_now())
+
+      assert SessionQuery.get_active() == nil
+    end
+  end
+
   describe "create/1" do
     test "creates a session given valid data" do
       valid_attrs = %{name: "Test session"}

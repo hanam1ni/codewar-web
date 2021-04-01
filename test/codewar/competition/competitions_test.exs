@@ -38,6 +38,39 @@ defmodule Codewar.Competition.SessionsTest do
     end
   end
 
+  describe "get_active_challenge/0" do
+    test "returns the started but not yet completed challenge" do
+      challenge = insert(:challenge, started_at: NaiveDateTime.utc_now(), completed_at: nil)
+
+      assert Competitions.get_active_challenge() == challenge
+    end
+
+    test "does NOT return completed challenges" do
+      _completed_challenge =
+        insert(:challenge,
+          started_at: NaiveDateTime.utc_now(),
+          completed_at: NaiveDateTime.utc_now()
+        )
+
+      assert Competitions.get_active_challenge() == nil
+    end
+  end
+
+  describe "get_active_session/0" do
+    test "returns the started but not yet completed session" do
+      session = insert(:session, started_at: NaiveDateTime.utc_now(), completed_at: nil)
+
+      assert Competitions.get_active_session() == session
+    end
+
+    test "does NOT return completed sessions" do
+      _completed_session =
+        insert(:session, started_at: NaiveDateTime.utc_now(), completed_at: NaiveDateTime.utc_now())
+
+      assert Competitions.get_active_session() == nil
+    end
+  end
+
   describe "create_challenge/1" do
     test "creates a challenge given valid data" do
       session = insert(:session)

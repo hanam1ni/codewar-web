@@ -22,9 +22,13 @@ defmodule CodewarWeb.LayoutView do
     "#{module_class_name(conn)} #{action_name(conn)}"
   end
 
+  # Transforming module names
+  # Elixir.CodewarWeb.Home.IndexLive => "home"
   defp live_module_class_name(module_name) do
     module_name
-    |> Phoenix.Naming.resource_name()
+    |> Phoenix.Naming.underscore()
+    |> String.split("/")
+    |> Enum.at(1)
     |> String.replace("_", "-")
   end
 

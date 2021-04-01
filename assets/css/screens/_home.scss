@@ -1,0 +1,5 @@
+body.home {
+  .spinner > div:not(:last-child) {
+    margin-right: $grid-gutter-width;
+  }
+}
