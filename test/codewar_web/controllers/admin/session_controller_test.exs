@@ -1,6 +1,8 @@
 defmodule CodewarWeb.Admin.SessionControllerTest do
   use CodewarWeb.ConnCase, async: true
 
+  alias Codewar.Competition.Competitions
+
   describe "new/2" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.session_path(conn, :new))
@@ -75,6 +77,81 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
       conn = delete(conn, Routes.session_path(conn, :delete, session))
 
       assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
+    end
+  end
+
+  describe "start/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :start, session))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :mark_session_as_started, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :start, session))
+
+      assert get_flash(conn, :error) == "The session cannot be started."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
+    end
+  end
+
+  describe "stop/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :stop, session))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :mark_session_as_completed, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :stop, session))
+
+      assert get_flash(conn, :error) == "The session cannot be stopped."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
+    end
+  end
+
+  describe "reset/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :reset, session))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :reset_session, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :reset, session))
+
+      assert get_flash(conn, :error) == "The session cannot be reset."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
     end
   end
 end

@@ -55,4 +55,52 @@ defmodule CodewarWeb.Admin.SessionController do
     |> put_flash(:info, "Session deleted successfully.")
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
+
+  def start(conn, %{"session_id" => session_id}) do
+    session = Competitions.get_session(session_id)
+
+    case Competitions.mark_session_as_started(session) do
+      {:ok, session} ->
+        conn
+        |> put_flash(:info, "Session started successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The session cannot be started.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
+  end
+
+  def stop(conn, %{"session_id" => session_id}) do
+    session = Competitions.get_session(session_id)
+
+    case Competitions.mark_session_as_completed(session) do
+      {:ok, session} ->
+        conn
+        |> put_flash(:info, "Session stopped successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The session cannot be stopped.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
+  end
+
+  def reset(conn, %{"session_id" => session_id}) do
+    session = Competitions.get_session(session_id)
+
+    case Competitions.reset_session(session) do
+      {:ok, session} ->
+        conn
+        |> put_flash(:info, "Session reset successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The session cannot be reset.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
+  end
 end

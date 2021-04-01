@@ -52,7 +52,7 @@ defmodule Codewar.Competition.Queries.SessionQueryTest do
   end
 
   describe "update/2" do
-    test "updates the session given valid data " do
+    test "updates the session given valid data" do
       session = insert(:session, name: "Test session")
       valid_attrs = %{name: "Updated test session"}
 
@@ -81,6 +81,38 @@ defmodule Codewar.Competition.Queries.SessionQueryTest do
       session = insert(:session)
 
       assert %Ecto.Changeset{} = SessionQuery.change(session)
+    end
+  end
+
+  describe "mark_as_started/1" do
+    test "updates the session started_at" do
+      session = insert(:session, started_at: nil)
+
+      assert {:ok, %Session{} = session} = SessionQuery.mark_as_started(session)
+      refute session.started_at == nil
+    end
+  end
+
+  describe "mark_as_completed/1" do
+    test "updates the session completed_at" do
+      session = insert(:session, completed_at: nil)
+
+      assert {:ok, %Session{} = session} = SessionQuery.mark_as_completed(session)
+      refute session.completed_at == nil
+    end
+  end
+
+  describe "reset/1" do
+    test "resets the session started_at and completed_at" do
+      session =
+        insert(:session,
+          started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
+        )
+
+      assert {:ok, %Session{} = session} = SessionQuery.reset(session)
+      assert session.started_at == nil
+      assert session.completed_at == nil
     end
   end
 end

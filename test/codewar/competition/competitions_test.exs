@@ -206,4 +206,36 @@ defmodule Codewar.Competition.SessionsTest do
       assert %Ecto.Changeset{} = Competitions.change_session(session)
     end
   end
+
+  describe "mark_session_as_started/1" do
+    test "updates the session started_at" do
+      session = insert(:session, started_at: nil)
+
+      assert {:ok, %Session{} = session} = Competitions.mark_session_as_started(session)
+      refute session.started_at == nil
+    end
+  end
+
+  describe "mark_session_as_completed/1" do
+    test "updates the session completed_at" do
+      session = insert(:session, completed_at: nil)
+
+      assert {:ok, %Session{} = session} = Competitions.mark_session_as_completed(session)
+      refute session.completed_at == nil
+    end
+  end
+
+  describe "reset_session/1" do
+    test "resets the session started_at and completed_at" do
+      session =
+        insert(:session,
+          started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
+        )
+
+      assert {:ok, %Session{} = session} = Competitions.reset_session(session)
+      assert session.started_at == nil
+      assert session.completed_at == nil
+    end
+  end
 end

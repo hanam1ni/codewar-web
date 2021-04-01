@@ -1,6 +1,8 @@
 defmodule CodewarWeb.Admin.SessionRequestTest do
   use CodewarWeb.ConnCase, async: true
 
+  alias Codewar.Competition.Competitions
+
   describe "get new/2" do
     test "responds with 200 status", %{conn: conn} do
       conn = get(conn, Routes.session_path(conn, :new))
@@ -9,7 +11,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "create/2" do
+  describe "post create/2" do
     test "responds with 302 redirect status given valid data", %{conn: conn} do
       valid_attrs = %{name: "Test session"}
 
@@ -74,6 +76,78 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
       conn = delete(conn, Routes.session_path(conn, :delete, session))
 
       assert conn.status == 302
+    end
+  end
+
+  describe "patch start/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :start, session))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :mark_session_as_started, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :start, session))
+
+      assert conn.status == 302
+
+      verify!()
+    end
+  end
+
+  describe "patch stop/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :stop, session))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :mark_session_as_completed, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :stop, session))
+
+      assert conn.status == 302
+
+      verify!()
+    end
+  end
+
+  describe "pathc reset/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      session = insert(:session)
+
+      conn = put(conn, Routes.session_session_path(conn, :reset, session))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      session = insert(:session)
+
+      expect(Competitions, :reset_session, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.session_session_path(conn, :reset, session))
+
+      assert conn.status == 302
+
+      verify!()
     end
   end
 end

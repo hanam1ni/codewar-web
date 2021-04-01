@@ -37,13 +37,9 @@ defmodule Codewar.Competition.Competitions do
     end
   end
 
-  def create_challenge(attrs \\ %{}) do
-    ChallengeQuery.create(attrs)
-  end
+  def create_challenge(attrs \\ %{}), do: ChallengeQuery.create(attrs)
 
-  def create_session(attrs \\ %{}) do
-    SessionQuery.create(attrs)
-  end
+  def create_session(attrs \\ %{}), do: SessionQuery.create(attrs)
 
   def update_challenge(%Challenge{} = challenge, attrs) do
     ChallengeQuery.update(challenge, attrs)
@@ -71,5 +67,17 @@ defmodule Codewar.Competition.Competitions do
 
   def change_session(%Session{} = session, attrs \\ %{}) do
     SessionQuery.change(session, attrs)
+  end
+
+  def mark_session_as_started(%Session{} = session) do
+    SessionQuery.mark_as_started(session)
+  end
+
+  def mark_session_as_completed(%Session{} = session) do
+    SessionQuery.mark_as_completed(session)
+  end
+
+  def reset_session(%Session{} = session) do
+    SessionQuery.reset(session)
   end
 end

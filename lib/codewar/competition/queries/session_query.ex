@@ -49,4 +49,22 @@ defmodule Codewar.Competition.Queries.SessionQuery do
   def change(%Session{} = session, attrs \\ %{}) do
     Session.changeset(session, attrs)
   end
+
+  def mark_as_started(%Session{} = session) do
+    session
+    |> Session.started_changeset()
+    |> Repo.update()
+  end
+
+  def mark_as_completed(%Session{} = session) do
+    session
+    |> Session.completed_changeset()
+    |> Repo.update()
+  end
+
+  def reset(%Session{} = session) do
+    session
+    |> Session.reset_changeset()
+    |> Repo.update()
+  end
 end

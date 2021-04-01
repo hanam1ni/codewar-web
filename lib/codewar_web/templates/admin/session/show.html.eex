@@ -10,6 +10,16 @@
       <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
 
       <%= link "New Challenge", to: Routes.session_challenge_path(@conn, :new, @session), class: "button button--secondary button--sm" %>
+
+      <%= if completed?(@session) do %>
+        <%= link "Reset", to: Routes.session_session_path(@conn, :reset, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+      <% else %>
+        <%= if active?(@session) do %>
+          <%= link "Stop", to: Routes.session_session_path(@conn, :stop, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+        <% else %>
+          <%= link "Start", to: Routes.session_session_path(@conn, :start, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+        <% end %>
+      <% end %>
     </div>
   </header>
 
