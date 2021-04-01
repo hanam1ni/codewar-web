@@ -6,6 +6,7 @@ defmodule Codewar.Competition.Schemas.Challenge do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Codewar.Competition.Schemas.Answer
   alias Codewar.Competition.Schemas.Session
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
@@ -13,7 +14,7 @@ defmodule Codewar.Competition.Schemas.Challenge do
 
   schema "challenges" do
     field :name, :string
-    field :requirement, :string, null: false
+    field :requirement, :string
     field :hint, :string
     field :answer, :string
     field :submission_cap, :integer
@@ -21,6 +22,7 @@ defmodule Codewar.Competition.Schemas.Challenge do
     field :completed_at, :naive_datetime
 
     belongs_to :session, Session, foreign_key: :session_id
+    has_many :answers, Answer
 
     timestamps()
   end

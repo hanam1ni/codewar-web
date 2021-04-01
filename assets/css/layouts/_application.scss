@@ -16,3 +16,8 @@
     max-width: map-get($container-max-widths, 'xl');
   }
 }
+
+.layout-application .main-application > div {
+  padding-top: $spacer;
+  padding-bottom: $spacer;
+}

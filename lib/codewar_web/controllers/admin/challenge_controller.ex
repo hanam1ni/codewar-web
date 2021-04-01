@@ -5,7 +5,7 @@ defmodule CodewarWeb.Admin.ChallengeController do
   alias Codewar.Competition.Schemas.Challenge
 
   def new(conn, %{"session_id" => session_id}) do
-    session = Competitions.get_session!(session_id)
+    session = Competitions.get_session(session_id)
     changeset = Competitions.change_challenge(%Challenge{})
 
     render(conn, "new.html", session: session, changeset: changeset)
@@ -19,26 +19,26 @@ defmodule CodewarWeb.Admin.ChallengeController do
         |> redirect(to: Routes.challenge_path(conn, :show, challenge))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        session = Competitions.get_session!(session_id)
+        session = Competitions.get_session(session_id)
 
         render(conn, "new.html", session: session, changeset: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    challenge = Competitions.get_challenge!(id)
+    challenge = Competitions.get_challenge(id)
     render(conn, "show.html", challenge: challenge)
   end
 
   def edit(conn, %{"id" => id}) do
-    challenge = Competitions.get_challenge!(id)
+    challenge = Competitions.get_challenge(id)
     changeset = Competitions.change_challenge(challenge)
 
     render(conn, "edit.html", challenge: challenge, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "challenge" => challenge_params}) do
-    challenge = Competitions.get_challenge!(id)
+    challenge = Competitions.get_challenge(id)
 
     case Competitions.update_challenge(challenge, challenge_params) do
       {:ok, challenge} ->
@@ -52,7 +52,7 @@ defmodule CodewarWeb.Admin.ChallengeController do
   end
 
   def delete(conn, %{"id" => id}) do
-    challenge = Competitions.get_challenge!(id)
+    challenge = Competitions.get_challenge(id)
     {:ok, _challenge} = Competitions.delete_challenge(challenge)
 
     conn

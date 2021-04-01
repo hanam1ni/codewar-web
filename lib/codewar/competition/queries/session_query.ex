@@ -15,12 +15,12 @@ defmodule Codewar.Competition.Queries.SessionQuery do
     |> Repo.all()
   end
 
-  def get!(id) do
+  def get(id) do
     challenge_query = from(c in Challenge, order_by: [asc: c.inserted_at])
 
     Session
     |> preload(challenges: ^challenge_query)
-    |> Repo.get!(id)
+    |> Repo.get_by(id: id)
   end
 
   def get_active do

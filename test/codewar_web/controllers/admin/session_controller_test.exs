@@ -76,15 +76,5 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     end
-
-    test "deletes the session given a valid session", %{conn: conn} do
-      session = insert(:session)
-
-      conn = delete(conn, Routes.session_path(conn, :delete, session))
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.session_path(conn, :show, session))
-      end
-    end
   end
 end

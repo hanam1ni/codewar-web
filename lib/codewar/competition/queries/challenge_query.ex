@@ -8,7 +8,7 @@ defmodule Codewar.Competition.Queries.ChallengeQuery do
 
   alias Codewar.Competition.Schemas.Challenge
 
-  def get!(id), do: Repo.get!(Challenge, id)
+  def get(id), do: Repo.get_by(Challenge, id: id)
 
   def get_active do
     Challenge

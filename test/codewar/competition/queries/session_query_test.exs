@@ -13,11 +13,11 @@ defmodule Codewar.Competition.Queries.SessionQueryTest do
     end
   end
 
-  describe "get!/1" do
+  describe "get_by/1" do
     test "returns the session with given id" do
       session = insert(:session, challenges: [build(:challenge)])
 
-      assert SessionQuery.get!(session.id) == session
+      assert SessionQuery.get(session.id) == session
     end
   end
 

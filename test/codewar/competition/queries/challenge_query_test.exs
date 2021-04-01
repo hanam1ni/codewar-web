@@ -4,11 +4,11 @@ defmodule Codewar.Competition.Queries.ChallengeQueryTest do
   alias Codewar.Competition.Queries.ChallengeQuery
   alias Codewar.Competition.Schemas.Challenge
 
-  describe "get!/1" do
+  describe "get_by/1" do
     test "returns the challenge with given id" do
       challenge = insert(:challenge)
 
-      assert ChallengeQuery.get!(challenge.id) == challenge
+      assert ChallengeQuery.get(challenge.id) == challenge
     end
   end
 

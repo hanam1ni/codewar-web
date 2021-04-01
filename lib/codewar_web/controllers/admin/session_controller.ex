@@ -22,19 +22,19 @@ defmodule CodewarWeb.Admin.SessionController do
   end
 
   def show(conn, %{"id" => id}) do
-    session = Competitions.get_session!(id)
+    session = Competitions.get_session(id)
     render(conn, "show.html", session: session)
   end
 
   def edit(conn, %{"id" => id}) do
-    session = Competitions.get_session!(id)
+    session = Competitions.get_session(id)
     changeset = Competitions.change_session(session)
 
     render(conn, "edit.html", session: session, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "session" => session_params}) do
-    session = Competitions.get_session!(id)
+    session = Competitions.get_session(id)
 
     case Competitions.update_session(session, session_params) do
       {:ok, session} ->
@@ -48,7 +48,7 @@ defmodule CodewarWeb.Admin.SessionController do
   end
 
   def delete(conn, %{"id" => id}) do
-    session = Competitions.get_session!(id)
+    session = Competitions.get_session(id)
     {:ok, _session} = Competitions.delete_session(session)
 
     conn

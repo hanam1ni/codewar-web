@@ -2,6 +2,7 @@ defmodule Codewar.Competition.SessionsTest do
   use Codewar.DataCase, async: true
 
   alias Codewar.Competition.Competitions
+  alias Codewar.Competition.Schemas.Answer
   alias Codewar.Competition.Schemas.Challenge
   alias Codewar.Competition.Schemas.Session
 
@@ -13,26 +14,26 @@ defmodule Codewar.Competition.SessionsTest do
     end
   end
 
-  describe "get_challenge!/1" do
+  describe "get_challenge/1" do
     test "returns the challenge with given id" do
       challenge = insert(:challenge, name: "Test session")
 
-      assert Competitions.get_challenge!(challenge.id) == challenge
+      assert Competitions.get_challenge(challenge.id) == challenge
     end
   end
 
-  describe "get_session!/1" do
+  describe "get_session/1" do
     test "returns the session with given id" do
       session = insert(:session, challenges: [build(:challenge)])
 
-      assert Competitions.get_session!(session.id) == session
+      assert Competitions.get_session(session.id) == session
     end
 
     test "returns the challenges for the session" do
       session = insert(:session)
       challenge = insert(:challenge, session_id: session.id)
 
-      session_from_db = Competitions.get_session!(session.id)
+      session_from_db = Competitions.get_session(session.id)
 
       assert session_from_db.challenges == [challenge]
     end
@@ -68,6 +69,42 @@ defmodule Codewar.Competition.SessionsTest do
         insert(:session, started_at: NaiveDateTime.utc_now(), completed_at: NaiveDateTime.utc_now())
 
       assert Competitions.get_active_session() == nil
+    end
+  end
+
+  describe "validate_and_create_answer/1" do
+    test "validates the answer" do
+      challenge = insert(:challenge, answer: "42", session: build(:session))
+      valid_answer_params = string_params_for(:answer, answer: "42", challenge_id: challenge.id)
+
+      invalid_answer_params =
+        string_params_for(:answer, answer: "invalid", challenge_id: challenge.id)
+
+      {:ok, valid_created_answer} = Competitions.validate_and_create_answer(valid_answer_params)
+      {:ok, invalid_created_answer} = Competitions.validate_and_create_answer(invalid_answer_params)
+
+      assert valid_created_answer.is_valid == true
+      assert invalid_created_answer.is_valid == false
+    end
+
+    test "returns the created answer given valid params" do
+      challenge = insert(:challenge, session: build(:session))
+      answer_params = string_params_for(:answer, challenge_id: challenge.id)
+
+      assert {:ok, %Answer{} = _} = Competitions.validate_and_create_answer(answer_params)
+    end
+
+    test "returns error changeset given invalid data" do
+      challenge = insert(:challenge, session: build(:session))
+      invalid_attrs = %{"username" => "", "answer" => "", "challenge_id" => challenge.id}
+
+      assert {:error, %Ecto.Changeset{}} = Competitions.validate_and_create_answer(invalid_attrs)
+    end
+
+    test "returns error :invalid_challenge given an invalid challenge" do
+      invalid_attrs = %{"answer" => "42", "challenge_id" => Faker.UUID.v4()}
+
+      assert {:error, :invalid_challenge} = Competitions.validate_and_create_answer(invalid_attrs)
     end
   end
 
