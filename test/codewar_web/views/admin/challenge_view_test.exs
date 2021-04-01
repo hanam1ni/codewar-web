@@ -7,7 +7,7 @@ defmodule CodewarWeb.Admin.ChallengeViewTest do
 
   describe "to_markdown/1" do
     test "returns placeholder content given nil content" do
-      assert ChallengeView.to_markdown(nil) == content_tag(:p, "No hint")
+      assert ChallengeView.to_markdown(nil) == content_tag(:p, "No content")
     end
 
     test "returns HTML content given markown content" do

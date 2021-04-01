@@ -43,6 +43,7 @@
         </form>
       </section>
       <section class="challenge-content">
+        <%= raw(to_markdown(@current_challenge.requirement)) %>
       </section>
     <% end %>
   <% end %>

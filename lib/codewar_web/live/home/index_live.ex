@@ -35,6 +35,8 @@ defmodule CodewarWeb.Home.IndexLive do
     end
   end
 
+  def to_markdown(content), do: Earmark.as_html!(content)
+
   defp maybe_fetch_competition_data(%{connected?: true} = socket) do
     socket
     |> assign(:current_session, get_active_session())

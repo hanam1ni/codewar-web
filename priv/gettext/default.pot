@@ -16,11 +16,6 @@ msgid "No sessions"
 msgstr ""
 
 #, elixir-format
-#: lib/codewar_web/live/page_live.html.leex:2
-msgid "Welcome to %{name}!"
-msgstr ""
-
-#, elixir-format
 #: lib/codewar_web/templates/admin/dashboard/index.html.eex:19
 #: lib/codewar_web/templates/admin/session/show.html.eex:26
 msgid "Name"
@@ -58,5 +53,5 @@ msgstr ""
 
 #, elixir-format
 #: lib/codewar_web/views/admin/challenge_view.ex:4
-msgid "No hint"
+msgid "No content"
 msgstr ""
