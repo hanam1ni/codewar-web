@@ -137,7 +137,7 @@ defmodule CodewarWeb.Admin.ChallengeRequestTest do
     end
   end
 
-  describe "pathc reset/2" do
+  describe "patch reset/2" do
     test "responds with 302 redirect status given valid data", %{conn: conn} do
       challenge = insert(:challenge, session: build(:session))
 

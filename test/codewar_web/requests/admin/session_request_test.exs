@@ -127,7 +127,7 @@ defmodule CodewarWeb.Admin.SessionRequestTest do
     end
   end
 
-  describe "pathc reset/2" do
+  describe "patch reset/2" do
     test "responds with 302 redirect status given valid data", %{conn: conn} do
       session = insert(:session)
 

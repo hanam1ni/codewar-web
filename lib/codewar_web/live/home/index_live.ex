@@ -15,7 +15,7 @@ defmodule CodewarWeb.Home.IndexLive do
      socket
      |> assign(current_session: nil)
      |> assign(current_challenge: nil)
-     |> assign(changeset: Competitions.change_answer(%Answer{}))
+     |> assign(changeset: empty_answer_changeset())
      |> maybe_fetch_competition_data()}
   end
 
@@ -48,6 +48,23 @@ defmodule CodewarWeb.Home.IndexLive do
   end
 
   @impl true
+  def handle_info({:start_challenge, challenge}, socket) do
+    socket =
+      socket
+      |> assign(:current_challenge, challenge)
+      |> clear_flash(:error)
+      |> clear_flash(:info)
+      |> assign(changeset: empty_answer_changeset())
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:stop_challenge, _}, socket) do
+    {:noreply, assign(socket, :current_challenge, nil)}
+  end
+
+  @impl true
   def handle_info(_, socket), do: {:noreply, socket}
 
   def to_markdown(content), do: Earmark.as_html!(content)
@@ -66,6 +83,10 @@ defmodule CodewarWeb.Home.IndexLive do
 
   defp get_active_challenge do
     Competitions.get_active_challenge()
+  end
+
+  defp empty_answer_changeset do
+    Competitions.change_answer(%Answer{})
   end
 
   defp handle_user_feedback(socket, answer, type, message) do
