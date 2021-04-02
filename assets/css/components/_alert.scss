@@ -11,6 +11,10 @@
     @extend .alert-info;
   }
 
+  &--success {
+    @extend .alert-success;
+  }
+
   p:last-child {
     margin-bottom: 0;
   }

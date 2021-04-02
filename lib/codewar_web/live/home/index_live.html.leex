@@ -49,3 +49,8 @@
   <% end %>
   </div>
 </main>
+
+<div class="banner-announcement">
+  <div class="alert alert--success banner-announcement__alert" role="alert"
+       phx-click="lv:clear-flash" phx-value-key="success"><%= live_flash(@flash, :success) %></div>
+</div>

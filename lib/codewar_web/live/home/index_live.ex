@@ -24,6 +24,11 @@ defmodule CodewarWeb.Home.IndexLive do
     case Competitions.validate_and_create_answer(answer_params) do
       {:ok, answer} ->
         if answer.is_valid do
+          CompetitionChannel.notify_subscribers(
+            :announce_winner,
+            "Well done! " <> answer.username <> " solved the challenge 👏"
+          )
+
           handle_user_feedback(socket, answer, :info, "Well done! Challenge solved.")
         else
           handle_user_feedback(socket, answer, :error, "Try again. The answer is invalid.")
@@ -54,6 +59,7 @@ defmodule CodewarWeb.Home.IndexLive do
       |> assign(:current_challenge, challenge)
       |> clear_flash(:error)
       |> clear_flash(:info)
+      |> clear_flash(:success)
       |> assign(changeset: empty_answer_changeset())
 
     {:noreply, socket}
@@ -62,6 +68,11 @@ defmodule CodewarWeb.Home.IndexLive do
   @impl true
   def handle_info({:stop_challenge, _}, socket) do
     {:noreply, assign(socket, :current_challenge, nil)}
+  end
+
+  @impl true
+  def handle_info({:announce_winner, message}, socket) do
+    {:noreply, put_flash(socket, :success, message)}
   end
 
   @impl true
@@ -93,6 +104,7 @@ defmodule CodewarWeb.Home.IndexLive do
     {:noreply,
      socket
      |> clear_flash(:error)
+     |> clear_flash(:info)
      |> put_flash(type, message)
      |> assign(changeset: Competitions.change_answer(answer))}
   end
