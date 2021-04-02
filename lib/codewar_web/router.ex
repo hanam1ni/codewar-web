@@ -14,6 +14,10 @@ defmodule CodewarWeb.Router do
   end
 
   pipeline :admin do
+    if Mix.env() == :prod do
+      plug :basic_auth
+    end
+
     plug SetLayoutClassName, {:class_name, "admin"}
     plug :put_layout, {CodewarWeb.LayoutView, :admin}
   end
@@ -42,6 +46,12 @@ defmodule CodewarWeb.Router do
 
       resources "/challenges", Admin.ChallengeController, only: [:new, :create]
     end
+  end
+
+  defp basic_auth(conn, _opts) do
+    username = System.fetch_env!("BASIC_AUTH_USERNAME")
+    password = System.fetch_env!("BASIC_AUTH_PASSWORD")
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
   end
 
   # Enables LiveDashboard only for development
