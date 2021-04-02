@@ -1,6 +1,8 @@
 defmodule CodewarWeb.Admin.ChallengeRequestTest do
   use CodewarWeb.ConnCase, async: true
 
+  alias Codewar.Competition.Competitions
+
   describe "get new/2" do
     test "responds with 200 status", %{conn: conn} do
       session = insert(:session)
@@ -84,6 +86,78 @@ defmodule CodewarWeb.Admin.ChallengeRequestTest do
       conn = delete(conn, Routes.challenge_path(conn, :delete, challenge))
 
       assert conn.status == 302
+    end
+  end
+
+  describe "patch start/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      expect(Competitions, :mark_challenge_as_started, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
+
+      assert conn.status == 302
+
+      verify!()
+    end
+  end
+
+  describe "patch stop/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      expect(Competitions, :mark_challenge_as_completed, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
+
+      assert conn.status == 302
+
+      verify!()
+    end
+  end
+
+  describe "pathc reset/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
+
+      assert conn.status == 302
+    end
+
+    test "responds with 302 redirect status given invalid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      expect(Competitions, :reset_challenge, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
+
+      assert conn.status == 302
+
+      verify!()
     end
   end
 end

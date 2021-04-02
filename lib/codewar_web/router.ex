@@ -29,7 +29,11 @@ defmodule CodewarWeb.Router do
 
     get "/", Admin.DashboardController, :index
 
-    resources "/challenges", Admin.ChallengeController, except: [:index, :new, :create]
+    resources "/challenges", Admin.ChallengeController, except: [:index, :new, :create] do
+      put "/start", Admin.ChallengeController, :start
+      put "/stop", Admin.ChallengeController, :stop
+      put "/reset", Admin.ChallengeController, :reset
+    end
 
     resources "/sessions", Admin.SessionController, except: [:index] do
       put "/start", Admin.SessionController, :start

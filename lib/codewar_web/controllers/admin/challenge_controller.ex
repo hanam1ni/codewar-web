@@ -3,6 +3,7 @@ defmodule CodewarWeb.Admin.ChallengeController do
 
   alias Codewar.Competition.Competitions
   alias Codewar.Competition.Schemas.Challenge
+  alias CodewarWeb.Channels.CompetitionChannel
 
   def new(conn, %{"session_id" => session_id}) do
     session = Competitions.get_session(session_id)
@@ -58,5 +59,60 @@ defmodule CodewarWeb.Admin.ChallengeController do
     conn
     |> put_flash(:info, "Challenge deleted successfully.")
     |> redirect(to: Routes.session_path(conn, :show, challenge.session_id))
+  end
+
+  def start(conn, %{"challenge_id" => challenge_id}) do
+    challenge = Competitions.get_challenge(challenge_id)
+    session = Competitions.get_session(challenge.session_id)
+
+    case Competitions.mark_challenge_as_started(challenge) do
+      {:ok, challenge} ->
+        CompetitionChannel.notify_subscribers(:start_challenge, challenge)
+
+        conn
+        |> put_flash(:info, "Challenge started successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The challenge cannot be started.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
+  end
+
+  def stop(conn, %{"challenge_id" => challenge_id}) do
+    challenge = Competitions.get_challenge(challenge_id)
+    session = Competitions.get_session(challenge.session_id)
+
+    case Competitions.mark_challenge_as_completed(challenge) do
+      {:ok, challenge} ->
+        CompetitionChannel.notify_subscribers(:stop_challenge, challenge)
+
+        conn
+        |> put_flash(:info, "Challenge stopped successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The challenge cannot be stopped.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
+  end
+
+  def reset(conn, %{"challenge_id" => challenge_id}) do
+    challenge = Competitions.get_challenge(challenge_id)
+    session = Competitions.get_session(challenge.session_id)
+
+    case Competitions.reset_challenge(challenge) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Challenge reset successfully.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:error, "The challenge cannot be reset.")
+        |> redirect(to: Routes.session_path(conn, :show, session))
+    end
   end
 end

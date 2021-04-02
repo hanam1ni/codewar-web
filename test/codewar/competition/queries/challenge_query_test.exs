@@ -85,4 +85,37 @@ defmodule Codewar.Competition.Queries.ChallengeQueryTest do
       assert %Ecto.Changeset{} = ChallengeQuery.change(challenge)
     end
   end
+
+  describe "mark_as_started/1" do
+    test "updates the challenge started_at" do
+      challenge = insert(:challenge, started_at: nil, session: build(:session))
+
+      assert {:ok, %Challenge{} = challenge} = ChallengeQuery.mark_as_started(challenge)
+      refute challenge.started_at == nil
+    end
+  end
+
+  describe "mark_as_completed/1" do
+    test "updates the challenge completed_at" do
+      challenge = insert(:challenge, completed_at: nil, session: build(:session))
+
+      assert {:ok, %Challenge{} = challenge} = ChallengeQuery.mark_as_completed(challenge)
+      refute challenge.completed_at == nil
+    end
+  end
+
+  describe "reset/1" do
+    test "resets the challenge started_at and completed_at" do
+      challenge =
+        insert(:challenge,
+          started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          session: build(:session)
+        )
+
+      assert {:ok, %Challenge{} = challenge} = ChallengeQuery.reset(challenge)
+      assert challenge.started_at == nil
+      assert challenge.completed_at == nil
+    end
+  end
 end

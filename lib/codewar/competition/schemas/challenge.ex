@@ -41,4 +41,21 @@ defmodule Codewar.Competition.Schemas.Challenge do
     |> cast(attrs, [:name, :requirement, :hint, :answer, :submission_cap])
     |> validate_required([:name, :requirement, :answer, :submission_cap, :session_id])
   end
+
+  @doc false
+  def started_changeset(challenge) do
+    change(challenge, started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
+  end
+
+  @doc false
+  def completed_changeset(challenge) do
+    change(challenge, completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
+  end
+
+  @doc false
+  def reset_changeset(challenge) do
+    challenge
+    |> change(started_at: nil)
+    |> change(completed_at: nil)
+  end
 end

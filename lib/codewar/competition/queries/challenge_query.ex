@@ -42,4 +42,22 @@ defmodule Codewar.Competition.Queries.ChallengeQuery do
   def change(%Challenge{} = challenge, attrs) do
     Challenge.update_changeset(challenge, attrs)
   end
+
+  def mark_as_started(%Challenge{} = challenge) do
+    challenge
+    |> Challenge.started_changeset()
+    |> Repo.update()
+  end
+
+  def mark_as_completed(%Challenge{} = challenge) do
+    challenge
+    |> Challenge.completed_changeset()
+    |> Repo.update()
+  end
+
+  def reset(%Challenge{} = challenge) do
+    challenge
+    |> Challenge.reset_changeset()
+    |> Repo.update()
+  end
 end

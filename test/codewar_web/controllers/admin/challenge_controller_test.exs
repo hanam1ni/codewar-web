@@ -1,6 +1,8 @@
 defmodule CodewarWeb.Admin.ChallengeControllerTest do
   use CodewarWeb.ConnCase, async: true
 
+  alias Codewar.Competition.Competitions
+
   describe "new/2" do
     test "renders form", %{conn: conn} do
       session = insert(:session)
@@ -81,6 +83,87 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
       conn = delete(conn, Routes.challenge_path(conn, :delete, challenge))
 
       assert redirected_to(conn) == Routes.session_path(conn, :show, challenge.session_id)
+    end
+  end
+
+  describe "start/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      expect(Competitions, :mark_challenge_as_started, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
+
+      assert get_flash(conn, :error) == "The challenge cannot be started."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
+    end
+  end
+
+  describe "stop/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      expect(Competitions, :mark_challenge_as_completed, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
+
+      assert get_flash(conn, :error) == "The challenge cannot be stopped."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
+    end
+  end
+
+  describe "reset/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      expect(Competitions, :reset_challenge, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
+
+      assert get_flash(conn, :error) == "The challenge cannot be reset."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
     end
   end
 end

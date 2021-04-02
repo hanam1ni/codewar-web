@@ -69,6 +69,18 @@ defmodule Codewar.Competition.Competitions do
     SessionQuery.change(session, attrs)
   end
 
+  def mark_challenge_as_started(%Challenge{} = challenge) do
+    ChallengeQuery.mark_as_started(challenge)
+  end
+
+  def mark_challenge_as_completed(%Challenge{} = challenge) do
+    ChallengeQuery.mark_as_completed(challenge)
+  end
+
+  def reset_challenge(%Challenge{} = challenge) do
+    ChallengeQuery.reset(challenge)
+  end
+
   def mark_session_as_started(%Session{} = session) do
     SessionQuery.mark_as_started(session)
   end

@@ -43,6 +43,18 @@
           <td><%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge) %></td>
           <td>
             <%= link "Delete", to: Routes.challenge_path(@conn, :delete, challenge), method: :delete, class: "button button--outline-secondary button--sm", data: [confirm: "Are you sure?"] %>
+
+            <%= if active?(@session) do %>
+              <%= if completed?(challenge) do %>
+                <%= link "Reset", to: Routes.challenge_challenge_path(@conn, :reset, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+              <% else %>
+                <%= if active?(challenge) do %>
+                  <%= link "Stop", to: Routes.challenge_challenge_path(@conn, :stop, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+                <% else %>
+                  <%= link "Start", to: Routes.challenge_challenge_path(@conn, :start, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+                <% end %>
+              <% end %>
+             <% end %>
           </td>
         </tr>
         <% end %>

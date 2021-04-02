@@ -207,6 +207,39 @@ defmodule Codewar.Competition.SessionsTest do
     end
   end
 
+  describe "mark_challenge_as_started/1" do
+    test "updates the challenge started_at" do
+      challenge = insert(:challenge, started_at: nil, session: build(:session))
+
+      assert {:ok, %Challenge{} = challenge} = Competitions.mark_challenge_as_started(challenge)
+      refute challenge.started_at == nil
+    end
+  end
+
+  describe "mark_challenge_as_completed/1" do
+    test "updates the challenge completed_at" do
+      challenge = insert(:challenge, started_at: nil, session: build(:session))
+
+      assert {:ok, %Challenge{} = challenge} = Competitions.mark_challenge_as_completed(challenge)
+      refute challenge.completed_at == nil
+    end
+  end
+
+  describe "reset_challenge/1" do
+    test "resets the challenge started_at and completed_at" do
+      challenge =
+        insert(:challenge,
+          started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+          session: build(:session)
+        )
+
+      assert {:ok, %Challenge{} = challenge} = Competitions.reset_challenge(challenge)
+      assert challenge.started_at == nil
+      assert challenge.completed_at == nil
+    end
+  end
+
   describe "mark_session_as_started/1" do
     test "updates the session started_at" do
       session = insert(:session, started_at: nil)
