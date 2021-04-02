@@ -160,4 +160,14 @@ defmodule CodewarWeb.Admin.ChallengeRequestTest do
       verify!()
     end
   end
+
+  describe "post show_hin/2" do
+    test "responds with 302 redirect status given valid data", %{conn: conn} do
+      challenge = insert(:challenge, session: build(:session))
+
+      conn = post(conn, Routes.challenge_challenge_path(conn, :show_hint, challenge))
+
+      assert conn.status == 302
+    end
+  end
 end

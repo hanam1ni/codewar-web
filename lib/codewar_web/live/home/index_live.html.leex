@@ -45,6 +45,12 @@
       <section class="challenge-content">
         <%= raw(to_markdown(@current_challenge.requirement)) %>
       </section>
+      <%= if @show_hint do %>
+      <section class="challenge-hint">
+        <h3>Hint</h3>
+        <%= raw(to_markdown(@current_challenge.hint)) %>
+      </section>
+      <% end %>
     <% end %>
   <% end %>
   </div>

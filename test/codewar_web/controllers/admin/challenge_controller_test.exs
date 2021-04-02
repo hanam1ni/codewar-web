@@ -166,4 +166,15 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
       verify!()
     end
   end
+
+  describe "show_hint/2" do
+    test "redirects given valid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      conn = post(conn, Routes.challenge_challenge_path(conn, :show_hint, challenge))
+
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+  end
 end

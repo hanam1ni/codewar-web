@@ -37,6 +37,7 @@ defmodule CodewarWeb.Router do
       put "/start", Admin.ChallengeController, :start
       put "/stop", Admin.ChallengeController, :stop
       put "/reset", Admin.ChallengeController, :reset
+      post "/hint", Admin.ChallengeController, :show_hint
     end
 
     resources "/sessions", Admin.SessionController, except: [:index] do

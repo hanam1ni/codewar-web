@@ -117,4 +117,15 @@ defmodule CodewarWeb.Admin.ChallengeController do
         |> redirect(to: Routes.session_path(conn, :show, session))
     end
   end
+
+  def show_hint(conn, %{"challenge_id" => challenge_id}) do
+    challenge = Competitions.get_challenge(challenge_id)
+    session = Competitions.get_session(challenge.session_id)
+
+    CompetitionChannel.notify_subscribers(:show_hint, challenge)
+
+    conn
+    |> put_flash(:info, "Hint toggled successfully.")
+    |> redirect(to: Routes.session_path(conn, :show, session))
+  end
 end
