@@ -3,6 +3,7 @@ defmodule CodewarWeb.Admin.SessionController do
 
   alias Codewar.Competition.Competitions
   alias Codewar.Competition.Schemas.Session
+  alias CodewarWeb.Channels.CompetitionChannel
 
   def new(conn, _params) do
     changeset = Competitions.change_session(%Session{})
@@ -61,6 +62,8 @@ defmodule CodewarWeb.Admin.SessionController do
 
     case Competitions.mark_session_as_started(session) do
       {:ok, session} ->
+        CompetitionChannel.notify_subscribers(:start_session, session)
+
         conn
         |> put_flash(:info, "Session started successfully.")
         |> redirect(to: Routes.session_path(conn, :show, session))
@@ -77,6 +80,8 @@ defmodule CodewarWeb.Admin.SessionController do
 
     case Competitions.mark_session_as_completed(session) do
       {:ok, session} ->
+        CompetitionChannel.notify_subscribers(:stop_session, session)
+
         conn
         |> put_flash(:info, "Session stopped successfully.")
         |> redirect(to: Routes.session_path(conn, :show, session))

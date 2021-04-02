@@ -3,12 +3,14 @@ defmodule CodewarWeb.Home.IndexLive do
   use CodewarWeb, :live_view
 
   import CodewarWeb.ErrorHelpers
-
   alias Codewar.Competition.Competitions
   alias Codewar.Competition.Schemas.Answer
+  alias CodewarWeb.Channels.CompetitionChannel
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket), do: CompetitionChannel.subscribe()
+
     {:ok,
      socket
      |> assign(current_session: nil)
@@ -34,6 +36,19 @@ defmodule CodewarWeb.Home.IndexLive do
         {:noreply, put_flash(socket, :error, "This challenge does not exist")}
     end
   end
+
+  @impl true
+  def handle_info({:start_session, session}, socket) do
+    {:noreply, assign(socket, :current_session, session)}
+  end
+
+  @impl true
+  def handle_info({:stop_session, _}, socket) do
+    {:noreply, assign(socket, :current_session, nil)}
+  end
+
+  @impl true
+  def handle_info(_, socket), do: {:noreply, socket}
 
   def to_markdown(content), do: Earmark.as_html!(content)
 
