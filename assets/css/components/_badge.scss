@@ -1,0 +1,9 @@
+.badge {
+  &--danger {
+    background-color: var(--bs-red);
+  }
+
+  &--success {
+    background-color: var(--bs-green);
+  }
+}

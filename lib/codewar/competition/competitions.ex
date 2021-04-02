@@ -14,6 +14,10 @@ defmodule Codewar.Competition.Competitions do
     SessionQuery.list()
   end
 
+  def list_challenge_answers(chalenge_id) do
+    AnswerQuery.list_for_challenge(chalenge_id)
+  end
+
   def get_challenge(id), do: ChallengeQuery.get(id)
 
   def get_session(id), do: SessionQuery.get(id)

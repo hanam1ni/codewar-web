@@ -17,7 +17,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/codewar_web/templates/admin/dashboard/index.html.eex:19
-#: lib/codewar_web/templates/admin/session/show.html.eex:26
+#: lib/codewar_web/templates/admin/session/show.html.eex:36
 msgid "Name"
 msgstr ""
 
@@ -28,6 +28,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/codewar_web/templates/admin/challenge/show.html.eex:26
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:55
 msgid "Answer"
 msgstr ""
 
@@ -37,7 +38,7 @@ msgid "Hint"
 msgstr ""
 
 #, elixir-format
-#: lib/codewar_web/templates/admin/session/show.html.eex:20
+#: lib/codewar_web/templates/admin/session/show.html.eex:30
 msgid "No challenges"
 msgstr ""
 
@@ -54,4 +55,39 @@ msgstr ""
 #, elixir-format
 #: lib/codewar_web/views/admin/challenge_view.ex:4
 msgid "No content"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:11
+msgid "Invalid"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:48
+msgid "No answers yet"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:57
+msgid "Submission Time"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:41
+msgid "Submitted Answers"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:54
+msgid "Username"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:8
+msgid "Valid"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:56
+msgid "Validity"
 msgstr ""

@@ -35,3 +35,40 @@
     </div>
   </div>
 </section>
+
+<section class="challenge-info">
+  <header class="header-content">
+    <h2><%= gettext("Submitted Answers") %></h2>
+  </header>
+
+  <div class="card">
+    <div class="card__body card__body--full-width">
+      <%= if Enum.empty?(@answers) do %>
+      <div class="blank-state">
+        <p class="blank-state__text"><%= gettext "No answers yet" %></p>
+      </div>
+      <% else %>
+      <table class="table table--full-width table-answer">
+        <thead>
+          <tr>
+            <th class="table-answer__username"><%= gettext "Username" %></th>
+            <th class="table-answer__answer"><%= gettext "Answer" %></th>
+            <th class="table-answer__validity"><%= gettext "Validity" %></th>
+            <th class="table-answer__timestamp"><%= gettext "Submission Time" %></th>
+          </tr>
+        </thead>
+        <tbody>
+        <%= for answer <- @answers do %>
+          <tr>
+            <td class="table-answer__username"><%= answer.username %></td>
+            <td class="table-answer__answer"><%= answer.answer %></td>
+            <td class="table-answer__validity"><%= to_validity_status(answer) %></td>
+            <td class="table-answer__timestamp"><%= answer.inserted_at %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -8,6 +8,13 @@ defmodule Codewar.Competition.Queries.AnswerQuery do
 
   alias Codewar.Competition.Schemas.Answer
 
+  def list_for_challenge(challenge_id) do
+    Answer
+    |> where(challenge_id: ^challenge_id)
+    |> order_by(asc: :inserted_at)
+    |> Repo.all()
+  end
+
   def create(attrs \\ %{}) do
     %Answer{}
     |> Answer.changeset(attrs)

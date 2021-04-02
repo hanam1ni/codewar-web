@@ -28,7 +28,9 @@ defmodule CodewarWeb.Admin.ChallengeController do
 
   def show(conn, %{"id" => id}) do
     challenge = Competitions.get_challenge(id)
-    render(conn, "show.html", challenge: challenge)
+    answers = Competitions.list_challenge_answers(challenge.id)
+
+    render(conn, "show.html", challenge: challenge, answers: answers)
   end
 
   def edit(conn, %{"id" => id}) do
