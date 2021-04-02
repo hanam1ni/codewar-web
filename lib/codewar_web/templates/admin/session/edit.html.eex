@@ -1,0 +1,9 @@
+<div class="navigation-bar">
+  <%= link "Back", to: Routes.session_path(@conn, :show, @session), class: "navigation-bar__link navigation-bar__link--back" %>
+</div>
+
+<header class="header-content">
+  <h2>Edit Session</h2>
+</header>
+
+<%= render "_form.html", Map.put(assigns, :action, Routes.session_path(@conn, :update, @session)) %>

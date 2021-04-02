@@ -1,0 +1,17 @@
+/* This file is for your main application css. */
+@import 'css/variables';
+
+// Vendor
+@import 'vendor/bootstrap/bootstrap';
+
+// Application
+
+@import "css/functions/*.scss";
+@import "css/mixins/*.scss";
+@import "css/base/*.scss";
+@import "css/layouts/*.scss";
+@import "css/components/*.scss";
+@import "css/screens/*.scss";
+
+// TODO: Remove if/when not used
+@import 'css/phoenix-liveview';

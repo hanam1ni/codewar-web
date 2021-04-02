@@ -1,0 +1,45 @@
+<div class="card">
+  <%= form_for @changeset, @action, [class: "form "], fn f -> %>
+    <div class="card__body">
+      <%= if @changeset.action do %>
+        <div class="alert alert--danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
+
+      <%= if assigns[:session] do %>
+        <%= hidden_input f, :session_id, value: @session.id %>
+      <% end %>
+
+      <div class="form__field">
+        <%= label f, :name, class: "form__label" %>
+        <%= text_input f, :name, autocomplete: "off", class: "form__control" %>
+        <%= error_tag f, :name %>
+      </div>
+      <div class="form__field">
+        <%= label f, :requirement, class: "form__label" %>
+        <%= textarea f, :requirement, class: "form__control" %>
+        <%= error_tag f, :requirement %>
+      </div>
+      <div class="form__field">
+        <%= label f, :hint, class: "form__label" %>
+        <%= textarea f, :hint, class: "form__control" %>
+        <%= error_tag f, :hint %>
+      </div>
+      <div class="form__field">
+        <%= label f, :answer, class: "form__label" %>
+        <%= text_input f, :answer, class: "form__control" %>
+        <%= error_tag f, :answer %>
+      </div>
+      <div class="form__field">
+        <%= label f, :submission_cap, class: "form__label" %>
+        <%= number_input f, :submission_cap, class: "form__control" %>
+        <%= error_tag f, :submission_cap %>
+      </div>
+    </div>
+
+    <div class="card__footer form__footer">
+      <%= submit "Save", class: "button button--primary" %>
+    </div>
+  <% end %>
+</div>

@@ -7,5 +7,7 @@
   exit: "low",
   format: "txt",
   ignore: ["Config.HTTPS", "Config.CSP"],
-  ignore_files: []
+  ignore_files: [
+    "lib/codewar_web/templates/admin/challenge/show.html.eex"
+  ]
 ]

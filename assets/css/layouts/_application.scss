@@ -1,0 +1,23 @@
+.layout-application body > div {
+  display: grid;
+  grid-template-rows: rem(60px) 1fr;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.layout-application .header-application > div,
+.layout-application .main-application > div {
+  @include make-container();
+
+  height: 100%;
+
+  @include media-breakpoint-up('xl') {
+    max-width: map-get($container-max-widths, 'xl');
+  }
+}
+
+.layout-application .main-application > div {
+  padding-top: $spacer;
+  padding-bottom: $spacer;
+}

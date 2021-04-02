@@ -1,0 +1,62 @@
+<header class="header-application">
+  <div class="header-application__container">
+    <%= if is_nil(@current_session) do %>
+      <h1 class="header-application__text">Code 👨‍💻 🪖 War</h1>
+    <% else %>
+      <h1 class="header-application__text"><%= @current_session.name %></h1>
+    <% end %>
+  </div>
+</header>
+
+<main class="main-application" role="main">
+  <div class="main-application__container">
+  <%= if is_nil(@current_session) do %>
+    <div class="blank-state">
+      <p class="blank-state__text">No active competition. Check back later.</p>
+    </div>
+  <% else %>
+    <%= if is_nil(@current_challenge) do %>
+      <%= live_component(@socket, CodewarWeb.Home.Spinner, assigns) %>
+    <% else %>
+      <section class="challenge-submission">
+      <div class="alert alert--info" role="alert"
+           phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+      <div class="alert alert--danger" role="alert"
+           phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></div>
+
+        <%= f = form_for @changeset, "#", [phx_submit:  :submit_answer, class: "form form--inline form-submission"] %>
+          <%= hidden_input f, :challenge_id, value: @current_challenge.id %>
+
+          <div class="form__field form-submission__username">
+            <%= text_input f, :username, placeholder: "Your username", autocomplete: "off", class: "form__control" %>
+            <%= error_tag f, :username %>
+          </div>
+
+          <div class="form__field form-submission__answer">
+            <%= text_input f, :answer, placeholder: "Your solution", autocomplete: "off", class: "form__control" %>
+            <%= error_tag f, :answer %>
+          </div>
+
+          <div class=" form-submission__action">
+            <%= submit "Answer", class: "button button--primary" %>
+          </div>
+        </form>
+      </section>
+      <section class="challenge-content">
+        <%= raw(to_markdown(@current_challenge.requirement)) %>
+      </section>
+      <%= if @show_hint do %>
+      <section class="challenge-hint">
+        <h3>Hint</h3>
+        <%= raw(to_markdown(@current_challenge.hint)) %>
+      </section>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
+</main>
+
+<div class="banner-announcement">
+  <div class="alert alert--success banner-announcement__alert" role="alert"
+       phx-click="lv:clear-flash" phx-value-key="success"><%= live_flash(@flash, :success) %></div>
+</div>

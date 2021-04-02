@@ -1,0 +1,67 @@
+<div class="navigation-bar">
+  <%= link "Back", to: Routes.dashboard_path(@conn, :index), class: "navigation-bar__link navigation-bar__link--back" %>
+</div>
+
+<section class="session-info">
+  <header class="header-content">
+    <h2><%= @session.name %></h2>
+
+    <div class="header-content__action">
+      <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
+
+      <%= link "New Challenge", to: Routes.session_challenge_path(@conn, :new, @session), class: "button button--secondary button--sm" %>
+
+      <%= if completed?(@session) do %>
+        <%= link "Reset", to: Routes.session_session_path(@conn, :reset, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+      <% else %>
+        <%= if active?(@session) do %>
+          <%= link "Stop", to: Routes.session_session_path(@conn, :stop, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+        <% else %>
+          <%= link "Start", to: Routes.session_session_path(@conn, :start, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+        <% end %>
+      <% end %>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="card__body card__body--full-width">
+      <%= if Enum.empty?(@session.challenges) do %>
+      <div class="blank-state">
+        <p class="blank-state__text"><%= gettext "No challenges" %></p>
+      </div>
+      <% else %>
+      <table class="table table--full-width">
+        <thead>
+        <tr>
+          <th><%= gettext "Name" %></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%= for challenge <- @session.challenges do %>
+        <tr>
+          <td><%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge) %></td>
+          <td>
+            <%= link "Delete", to: Routes.challenge_path(@conn, :delete, challenge), method: :delete, class: "button button--outline-secondary button--sm", data: [confirm: "Are you sure?"] %>
+
+            <%= if active?(@session) do %>
+              <%= if completed?(challenge) do %>
+                <%= link "Reset", to: Routes.challenge_challenge_path(@conn, :reset, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+              <% else %>
+                <%= if active?(challenge) do %>
+                  <%= link "Show Hint", to: Routes.challenge_challenge_path(@conn, :show_hint, challenge), method: :post, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+                  <%= link "Stop", to: Routes.challenge_challenge_path(@conn, :stop, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+                <% else %>
+                  <%= link "Start", to: Routes.challenge_challenge_path(@conn, :start, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+                <% end %>
+              <% end %>
+             <% end %>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</section>

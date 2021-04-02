@@ -1,0 +1,18 @@
+.card {
+  &__body {
+    padding: $grid-gutter-width * 1.25 $grid-gutter-width * 0.85 $grid-gutter-width * 1.5;
+
+    background: #fff;
+    border-radius: $border-radius-sm;
+    box-shadow: $base-box-shadow;
+
+    &--full-width {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  &__footer {
+    padding: $grid-gutter-width 0;
+  }
+}

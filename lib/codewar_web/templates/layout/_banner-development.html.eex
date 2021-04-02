@@ -1,0 +1,5 @@
+<%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+  <small class="banner-development">
+    <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %>
+  </small>
+<% end %>

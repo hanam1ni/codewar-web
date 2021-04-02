@@ -1,0 +1,14 @@
+.blank-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  color: var(--cw-color-brand-lighter);
+  font-weight: bold;
+
+  &__text {
+    margin: 0;
+  }
+}

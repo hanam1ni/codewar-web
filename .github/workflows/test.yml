@@ -1,9 +1,10 @@
 name: "Tests"
+
 on: pull_request
 
 env:
   OTP_VERSION: "23.0.2"
-  ELIXIR_VERSION: "1.10.4"
+  ELIXIR_VERSION: "1.11.3"
 
 jobs:
   test:
@@ -22,11 +23,18 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
-      - uses: erlef/setup-elixir@v1
+      - name: Set up Elixir
+        uses: erlef/setup-elixir@v1
         with:
           otp-version: ${{ env.OTP_VERSION }}
           elixir-version: ${{ env.ELIXIR_VERSION }}
@@ -52,8 +60,7 @@ jobs:
       - name: Install Dependencies
         run: mix deps.get
 
-      
-      - name: Install node module
+      - name: Install Node modules
         run: npm --prefix assets install
 
       - name: Compile assets
@@ -80,9 +87,9 @@ jobs:
           MIX_ENV: test
           DB_HOST: localhost
       
-      - uses: actions/upload-artifact@v2
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
           name: wallaby_screenshots
           path: tmp/wallaby_screenshots/
-      

@@ -1,0 +1,10 @@
+.banner-announcement {
+  position: static;
+  bottom: 0;
+  z-index: map-get($zIndex, 'sky');
+
+  &__alert {
+    text-align: center;
+    border-radius: 0;
+  }
+}

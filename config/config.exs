@@ -10,6 +10,8 @@ use Mix.Config
 config :codewar,
   ecto_repos: [Codewar.Repo]
 
+config :codewar, Codewar.Repo, migration_primary_key: [type: :uuid]
+
 # Configures the endpoint
 config :codewar, CodewarWeb.Endpoint,
   url: [host: "localhost"],

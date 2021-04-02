@@ -1,0 +1,71 @@
+// Colors
+
+$color-brand: (
+  primary: #0f0032,
+  light: #1e113c,
+  lighter: #63607c,
+  lightest: #8a80a6,
+  lightest-alt: #917ada,
+  dark: #201547
+);
+
+$color-gray: (
+  primary: #d9e0e4,
+  light: #eef2f5,
+  lightest: #f9fbfd,
+  dark: #c1cdd3,
+  darkest: #9ea1ac
+);
+
+$color-blue: (
+  primary: #3d56f6,
+  light: #eceefe
+);
+
+$color-red: (
+  primary: #ec0645,
+  dark: #e20041
+);
+
+/// Layout
+
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+
+// Grid
+
+$zIndex: (
+  behind: -1,
+  default: 1,
+  high: 5,
+  higher: 100,
+  highest: 1100,
+  sky: 10000
+);
+
+// Base
+
+// Typography
+
+$font-sizes: (
+  default: 1rem,
+  xxs: 0.625rem,
+  xs: 0.75rem,
+  md: 0.875rem,
+  lg: 1.25rem,
+  xl: 1.375rem
+);
+
+$base-font-size: map-get($font-sizes, 'default');
+$base-line-height: 1.7;
+$base-font-color: map-get($color-brand, 'primary');
+
+$base-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+
+// Bootstrap Configuration
+
+$primary: map-get($color-blue, 'primary');
+$secondary: map-get($color-brand, 'lighter');
+
+$link-color: map-get($color-brand, 'lightest');
+$link-hover-color: map-get($color-brand, 'lightest-alt');
