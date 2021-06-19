@@ -20,6 +20,8 @@ config :codewar, CodewarWeb.Endpoint,
   pubsub_server: Codewar.PubSub,
   live_view: [signing_salt: "nEr/iREv"]
 
+config :codewar, CodewarWeb.Api, prime_numbers: "97=>804,797=>2001,1999=>68,67=>74,73=>830,829=>-1"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

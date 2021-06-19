@@ -16,4 +16,6 @@ if config_env() == :prod do
     ],
     secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
     server: true
+
+  config :codewar, CodewarWeb.Api, prime_numbers: System.fetch_env!("API_PRIME_NUMBER_LIST")
 end

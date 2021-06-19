@@ -22,13 +22,17 @@ defmodule CodewarWeb.Router do
     plug :put_layout, {CodewarWeb.LayoutView, :admin}
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   scope "/", CodewarWeb do
     pipe_through :browser
 
     live "/", Home.IndexLive, :index, as: :home
   end
 
-  scope "/admin/", CodewarWeb do
+  scope "/admin", CodewarWeb do
     pipe_through [:browser, :admin]
 
     get "/", Admin.DashboardController, :index
@@ -47,6 +51,12 @@ defmodule CodewarWeb.Router do
 
       resources "/challenges", Admin.ChallengeController, only: [:new, :create]
     end
+  end
+
+  scope "/api", CodewarWeb do
+    pipe_through :api
+
+    post "/prime/:answer", Api.PrimeController, :verify_answer
   end
 
   defp basic_auth(conn, _opts) do

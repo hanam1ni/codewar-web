@@ -40,29 +40,29 @@ defmodule Codewar.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:wallaby, "~> 0.28.0", [only: :test, runtime: false]},
-      {:sobelow, "~> 0.11.1", [only: [:dev, :test], runtime: false]},
-      {:mimic, "~> 1.4.0", [only: :test]},
+      {:ecto_sql, "~> 3.4"},
       {:ex_machina, "~> 2.7.0", [only: :test]},
       {:excoveralls, "~> 0.14.0", [only: :test]},
-      {:dialyxir, "~> 1.1.0", [only: [:dev], runtime: false]},
       {:credo, "~> 1.5.5", [only: [:dev, :test], runtime: false]},
+      {:dialyxir, "~> 1.1.0", [only: [:dev], runtime: false]},
       {:earmark, "~> 1.4"},
       {:faker, "~> 0.16.0", [only: :test]},
+      {:floki, ">= 0.27.0", only: :test},
+      {:gettext, "~> 0.11"},
+      {:jason, "~> 1.0"},
+      {:mimic, "~> 1.4.0", [only: :test]},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.1"},
-      {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_dashboard, "~> 0.4"},
+      {:sobelow, "~> 0.11.1", [only: [:dev, :test], runtime: false]},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:wallaby, "~> 0.28.0", [only: :test, runtime: false]}
     ]
   end
 
