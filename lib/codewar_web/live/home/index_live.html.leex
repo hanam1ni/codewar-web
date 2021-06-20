@@ -19,10 +19,10 @@
       <%= live_component(@socket, CodewarWeb.Home.Spinner, assigns) %>
     <% else %>
       <section class="challenge-submission">
-      <div class="alert alert--info" role="alert"
-           phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></div>
-      <div class="alert alert--danger" role="alert"
-           phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></div>
+        <div class="alert alert--info" role="alert"
+             phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+        <div class="alert alert--danger" role="alert"
+             phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></div>
 
         <%= f = form_for @changeset, "#", [phx_submit:  :submit_answer, class: "form form--inline form-submission"] %>
           <%= hidden_input f, :challenge_id, value: @current_challenge.id %>
@@ -42,9 +42,11 @@
           </div>
         </form>
       </section>
+
       <section class="challenge-content">
         <%= raw(to_markdown(@current_challenge.requirement)) %>
       </section>
+
       <%= if @show_hint do %>
       <section class="challenge-hint">
         <h3>Hint</h3>

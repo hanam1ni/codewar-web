@@ -73,8 +73,24 @@ defmodule Codewar.Competition.SessionsTest do
   end
 
   describe "validate_and_create_answer/1" do
+    test "prevents the submission of answers beyond the submission cap" do
+      challenge = insert(:challenge, answer: "42", submission_cap: 1, session: build(:session))
+
+      first_valid_answer_params =
+        string_params_for(:answer, answer: "42", challenge_id: challenge.id)
+
+      second_invalid_answer_params =
+        string_params_for(:answer, answer: "42", challenge_id: challenge.id)
+
+      assert {:ok, _valid_created_answer} =
+               Competitions.validate_and_create_answer(first_valid_answer_params)
+
+      assert {:error, :submission_cap_reached} =
+               Competitions.validate_and_create_answer(second_invalid_answer_params)
+    end
+
     test "validates the answer" do
-      challenge = insert(:challenge, answer: "42", session: build(:session))
+      challenge = insert(:challenge, answer: "42", submission_cap: 2, session: build(:session))
       valid_answer_params = string_params_for(:answer, answer: "42", challenge_id: challenge.id)
 
       invalid_answer_params =

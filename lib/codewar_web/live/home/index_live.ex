@@ -38,8 +38,15 @@ defmodule CodewarWeb.Home.IndexLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
+      {:error, :submission_cap_reached} ->
+        handle_user_feedback(
+          socket,
+          :error,
+          "Too late. No new answers are accepted for this challenge."
+        )
+
       {:error, :invalid_challenge} ->
-        {:noreply, put_flash(socket, :error, "This challenge does not exist")}
+        handle_user_feedback(socket, :error, "This challenge does not exist.")
     end
   end
 
@@ -110,6 +117,16 @@ defmodule CodewarWeb.Home.IndexLive do
 
   defp empty_answer_changeset do
     Competitions.change_answer(%Answer{})
+  end
+
+  defp handle_user_feedback(socket, type, message) do
+    IO.puts("############## handle_user_feedback/3")
+
+    {:noreply,
+     socket
+     |> clear_flash(:error)
+     |> clear_flash(:info)
+     |> put_flash(type, message)}
   end
 
   defp handle_user_feedback(socket, answer, type, message) do
