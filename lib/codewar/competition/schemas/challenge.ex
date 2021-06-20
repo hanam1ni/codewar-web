@@ -27,32 +27,21 @@ defmodule Codewar.Competition.Schemas.Challenge do
     timestamps()
   end
 
-  @doc false
-  def create_changeset(challenge, attrs) do
+  def changeset(challenge, attrs) do
     challenge
     |> cast(attrs, [:name, :requirement, :hint, :answer, :submission_cap, :session_id])
     |> validate_required([:name, :requirement, :answer, :submission_cap, :session_id])
     |> assoc_constraint(:session)
   end
 
-  @doc false
-  def update_changeset(challenge, attrs) do
-    challenge
-    |> cast(attrs, [:name, :requirement, :hint, :answer, :submission_cap])
-    |> validate_required([:name, :requirement, :answer, :submission_cap, :session_id])
-  end
-
-  @doc false
   def started_changeset(challenge) do
     change(challenge, started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
   end
 
-  @doc false
   def completed_changeset(challenge) do
     change(challenge, completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
   end
 
-  @doc false
   def reset_changeset(challenge) do
     challenge
     |> change(started_at: nil)

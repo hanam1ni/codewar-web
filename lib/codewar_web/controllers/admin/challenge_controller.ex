@@ -7,7 +7,7 @@ defmodule CodewarWeb.Admin.ChallengeController do
 
   def new(conn, %{"session_id" => session_id}) do
     session = Competitions.get_session(session_id)
-    changeset = Competitions.change_challenge(%Challenge{})
+    changeset = Challenge.changeset(%Challenge{}, %{})
 
     render(conn, "new.html", session: session, changeset: changeset)
   end
@@ -35,7 +35,7 @@ defmodule CodewarWeb.Admin.ChallengeController do
 
   def edit(conn, %{"id" => id}) do
     challenge = Competitions.get_challenge(id)
-    changeset = Competitions.change_challenge(challenge)
+    changeset = Challenge.changeset(challenge, %{})
 
     render(conn, "edit.html", challenge: challenge, changeset: changeset)
   end

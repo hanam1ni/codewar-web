@@ -116,12 +116,10 @@ defmodule CodewarWeb.Home.IndexLive do
   end
 
   defp empty_answer_changeset do
-    Competitions.change_answer(%Answer{})
+    Answer.changeset(%Answer{}, %{})
   end
 
   defp handle_user_feedback(socket, type, message) do
-    IO.puts("############## handle_user_feedback/3")
-
     {:noreply,
      socket
      |> clear_flash(:error)
@@ -135,6 +133,6 @@ defmodule CodewarWeb.Home.IndexLive do
      |> clear_flash(:error)
      |> clear_flash(:info)
      |> put_flash(type, message)
-     |> assign(changeset: Competitions.change_answer(answer))}
+     |> assign(changeset: Answer.changeset(answer, %{}))}
   end
 end

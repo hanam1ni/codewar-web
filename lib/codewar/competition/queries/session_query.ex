@@ -1,70 +1,24 @@
 defmodule Codewar.Competition.Queries.SessionQuery do
-  @moduledoc """
-  Query functions for managing Sessions
-  """
-
   import Ecto.Query, warn: false
-  alias Codewar.Repo
 
   alias Codewar.Competition.Schemas.Challenge
   alias Codewar.Competition.Schemas.Session
 
-  def list do
-    Session
-    |> order_by(desc: :inserted_at)
-    |> Repo.all()
+  def list(query \\ base()) do
+    order_by(query, asc: :inserted_at)
   end
 
-  def get(id) do
-    challenge_query = from(c in Challenge, order_by: [asc: c.inserted_at])
-
-    Session
-    |> preload(challenges: ^challenge_query)
-    |> Repo.get_by(id: id)
+  def list_active(query \\ base()) do
+    query
+    |> where([session], not is_nil(session.started_at))
+    |> where([session], is_nil(session.completed_at))
   end
 
-  def get_active do
-    Session
-    |> where([s], not is_nil(s.started_at))
-    |> where([s], is_nil(s.completed_at))
-    |> Repo.one()
+  def with_challenges(query \\ base()) do
+    challenge_query = from(challenge in Challenge, order_by: [asc: challenge.inserted_at])
+
+    preload(query, challenges: ^challenge_query)
   end
 
-  def create(attrs \\ %{}) do
-    %Session{}
-    |> Session.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def update(%Session{} = session, attrs) do
-    session
-    |> Session.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete(%Session{} = session) do
-    Repo.delete(session)
-  end
-
-  def change(%Session{} = session, attrs \\ %{}) do
-    Session.changeset(session, attrs)
-  end
-
-  def mark_as_started(%Session{} = session) do
-    session
-    |> Session.started_changeset()
-    |> Repo.update()
-  end
-
-  def mark_as_completed(%Session{} = session) do
-    session
-    |> Session.completed_changeset()
-    |> Repo.update()
-  end
-
-  def reset(%Session{} = session) do
-    session
-    |> Session.reset_changeset()
-    |> Repo.update()
-  end
+  defp base, do: Session
 end

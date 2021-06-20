@@ -6,7 +6,8 @@ defmodule CodewarWeb.Admin.SessionController do
   alias CodewarWeb.Channels.CompetitionChannel
 
   def new(conn, _params) do
-    changeset = Competitions.change_session(%Session{})
+    changeset = Session.changeset(%Session{}, %{})
+
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -24,12 +25,13 @@ defmodule CodewarWeb.Admin.SessionController do
 
   def show(conn, %{"id" => id}) do
     session = Competitions.get_session(id)
+
     render(conn, "show.html", session: session)
   end
 
   def edit(conn, %{"id" => id}) do
     session = Competitions.get_session(id)
-    changeset = Competitions.change_session(session)
+    changeset = Session.changeset(session, %{})
 
     render(conn, "edit.html", session: session, changeset: changeset)
   end

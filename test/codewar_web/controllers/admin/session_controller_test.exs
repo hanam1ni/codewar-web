@@ -17,6 +17,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = post(conn, Routes.session_path(conn, :create), session: valid_attrs)
 
+      assert conn.status == 302
       assert %{id: session_id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.session_path(conn, :show, session_id)
     end
@@ -57,6 +58,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_path(conn, :update, session), session: valid_attrs)
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -76,6 +78,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = delete(conn, Routes.session_path(conn, :delete, session))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     end
   end
@@ -86,6 +89,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_session_path(conn, :start, session))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -98,6 +102,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_session_path(conn, :start, session))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The session cannot be started."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
@@ -123,6 +128,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_session_path(conn, :stop, session))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The session cannot be stopped."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
@@ -136,6 +142,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_session_path(conn, :reset, session))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -148,6 +155,7 @@ defmodule CodewarWeb.Admin.SessionControllerTest do
 
       conn = put(conn, Routes.session_session_path(conn, :reset, session))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The session cannot be reset."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
