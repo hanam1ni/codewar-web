@@ -4,10 +4,12 @@
 
 <section class="challenge-info">
   <header class="header-content">
-    <h2><%= @challenge.name %></h2>
+    <h2 class="header-content__title">
+      <%= @challenge.name %>
+    </h2>
 
     <div class="header-content__action">
-      <%= link "Edit", to: Routes.challenge_path(@conn, :edit, @challenge), class: "button button--secondary button--sm" %>
+      <%= link "Edit", to: Routes.challenge_path(@conn, :edit, @challenge), class: "button button--primary button--sm" %>
     </div>
   </header>
 

@@ -1,17 +1,18 @@
 .navigation-bar {
   display: flex;
-  align-items: start;
+  align-items: center;
 
-  height: rem(40px);
+  height: rem(50px);
 
-  border-bottom: 1px solid var(--cw-color-gray-primary);
+  border-bottom: 1px solid $border-color;
 
   &__link {
-
     text-decoration: none;
 
+    font-size: map-get($font-sizes, 'md');
+
     &, &:hover {
-      color: $base-font-color;
+      color: $body-color;
     }
 
     &:hover {
@@ -20,17 +21,21 @@
   }
 
   &__link--back {
-    --icon-spacing: 20px;
-
-    display: block;
-    position: relative;
-
-    text-indent: var(--icon-spacing);
+    display: flex;
+    align-items: center;
 
     &:before {
-      content: '<';
-      position: absolute;
-      left: calc(-1 * var(--icon-spacing));
+      display: inline-block;
+      content: '';
+      vertical-align: -.125em;
+
+      width: 1.5rem;
+      height: 1.5rem;
+
+      // Bootstrap icon: https://icons.getbootstrap.com/icons/arrow-left/
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-left-short' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z'/></svg>");
+      background-repeat: no-repeat;
+      background-size: 1.5rem 1.5rem;
     }
   }
 }

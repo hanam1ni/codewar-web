@@ -1,36 +1,12 @@
-// Colors
-
-$color-brand: (
-  primary: #0f0032,
-  light: #1e113c,
-  lighter: #63607c,
-  lightest: #8a80a6,
-  lightest-alt: #917ada,
-  dark: #201547
+// Font sizes
+$font-sizes: (
+  xs: 0.625rem,  // 10px
+  sm: 0.75rem,   // 12px
+  md: 0.875rem,  // 14px
+  default: 1rem, // 16px
+  lg: 1.125rem,  // 18px
+  xl: 1.5rem,    // 24px
 );
-
-$color-gray: (
-  primary: #d9e0e4,
-  light: #eef2f5,
-  lightest: #f9fbfd,
-  dark: #c1cdd3,
-  darkest: #9ea1ac
-);
-
-$color-blue: (
-  primary: #3d56f6,
-  light: #eceefe
-);
-
-$color-red: (
-  primary: #ec0645,
-  dark: #e20041
-);
-
-/// Layout
-
-$grid-columns: 12;
-$grid-gutter-width: 30px;
 
 // Grid
 
@@ -43,29 +19,75 @@ $zIndex: (
   sky: 10000
 );
 
-// Base
+////////////////////////////////
+// Custom Bootstrap variables //
+////////////////////////////////
 
-// Typography
-
-$font-sizes: (
-  default: 1rem,
-  xxs: 0.625rem,
-  xs: 0.75rem,
-  md: 0.875rem,
-  lg: 1.25rem,
-  xl: 1.375rem
+// Grid containers
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1224px,
 );
 
-$base-font-size: map-get($font-sizes, 'default');
-$base-line-height: 1.7;
-$base-font-color: map-get($color-brand, 'primary');
+// Colors
+$blue: #3d56f6;
+$red: #ec0645;
+$green: #66a518;
+$yellow: #f9de0e;
+$cyan: #21bdca;
+$gray: #718096;
+$black: #000;
+$white: #fff;
 
-$base-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+$blue-100: #cdf4fe;
+$blue-200: #9ce4fe;
+$blue-300: #6bcefe;
+$blue-400: #6bcefe;
+$blue-500: $blue;
+$blue-600: #0772d8;
+$blue-700: #0555b5;
+$blue-800: #033c92;
+$blue-900: #012a78;
 
-// Bootstrap Configuration
+$gray-100: #f7fafc;
+$gray-200: #edf2f7;
+$gray-300: #e2e8f0;
+$gray-400: #cbd5e0;
+$gray-500: $gray;
+$gray-600: #718096;
+$gray-700: #4a5568;
+$gray-800: #2d3748;
+$gray-900: #1a202c;
 
-$primary: map-get($color-blue, 'primary');
-$secondary: map-get($color-brand, 'lighter');
+$primary: $blue;
+$secondary: $gray;
+$success: $green;
+$danger: $red;
+$warning: $yellow;
+$info: $blue;
+$light: $gray-200;
+$dark: $gray-800;
 
-$link-color: map-get($color-brand, 'lightest');
-$link-hover-color: map-get($color-brand, 'lightest-alt');
+$border-color: $gray-300;
+
+// Body
+$body-bg: $white;
+$body-color: $gray-800;
+
+// Buttons + Forms
+$input-btn-padding-y: 0.5rem; // 8px
+$input-btn-padding-x: 0.875rem; // 14px
+$input-btn-font-size: 0.875rem; // 14px
+
+$btn-border-radius: 0.25rem; // 4px
+
+// Tables
+$table-cell-padding-y: 0.875rem; // 14px
+$table-cell-padding-x: 0.875rem; // 14px
+$table-cell-padding-y-sm: 0.625rem; // 10px
+$table-cell-padding-x-sm: 0.625rem; // 10px
+
+$table-th-font-weight: 600;

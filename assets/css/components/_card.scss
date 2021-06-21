@@ -2,9 +2,9 @@
   &__body {
     padding: $grid-gutter-width * 1.25 $grid-gutter-width * 0.85 $grid-gutter-width * 1.5;
 
-    background: #fff;
+    background: $white;
     border-radius: $border-radius-sm;
-    box-shadow: $base-box-shadow;
+    box-shadow: $box-shadow-sm;
 
     &--full-width {
       padding-left: 0;

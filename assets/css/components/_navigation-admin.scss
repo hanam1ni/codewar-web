@@ -6,11 +6,25 @@
   }
 
   &__item {
-    font-size: map-get($font-sizes, 'md');
-    font-weight: 600;
+    font-weight: $font-weight-normal;
   }
 
   &__link {
+    @include transition($btn-transition);
+    display: block;
+    padding: rem(7px) rem(16px);
+
+    border-radius: $border-radius;
+
+    color: $gray-600;
+    font-size: map-get($font-sizes, 'default');
+
     text-decoration: none;
+
+    &:hover,
+    &--active {
+      background: lighten($blue-100, 5%);
+      color: $btn-link-hover-color;
+    }
   }
 }

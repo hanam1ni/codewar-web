@@ -8,9 +8,9 @@
   font-size: map-get($font-sizes, 'xs');
   text-align: center;
 
-  background: map-get($color-blue, 'primary');
+  background: $primary;
 
   &, > a {
-    color: #fff;
+    color: $white;
   }
 }

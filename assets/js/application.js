@@ -16,6 +16,10 @@ import "../css/application.scss"
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 
+// Bootstrap
+import "bootstrap/dist/js/bootstrap";
+
+// Liveview
 import "phoenix_html"
 import {Socket} from "phoenix"
 import topbar from "topbar"

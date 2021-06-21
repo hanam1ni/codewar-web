@@ -3,7 +3,7 @@
 </div>
 
 <header class="header-content">
-  <h2>Edit Session</h2>
+  <h2 class="header-content__title">Edit Session</h2>
 </header>
 
 <%= render "_form.html", Map.put(assigns, :action, Routes.session_path(@conn, :update, @session)) %>

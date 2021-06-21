@@ -1,20 +1,20 @@
 body {
-  color: $base-font-color;
   font-size: map-get($font-sizes, 'md');
 
   @include media-breakpoint-up('lg') {
-    font-size: $base-font-size;
+    font-size: $font-size-base;
   }
 }
 
 ::-moz-selection {
-  color: #fff;
-  background: map-get($color-brand, 'light');
+  color: $white;
+  background: $component-active-color;
 }
 
 ::selection {
-  color: #fff;
-  background: map-get($color-brand, 'lighter');
+  color: $white;
+  background: $component-active-color;
+;
 }
 
 pre {
@@ -24,7 +24,7 @@ pre {
   font-size: map-get($font-sizes, 'md');
   white-space: pre-wrap;
 
-  background: var(--cw-color-gray-light);
+  background: $gray-900;
   border-radius: $border-radius;
 }
 
@@ -40,7 +40,7 @@ blockquote {
     position: absolute;
     top: 0;
     left: 0;
-    background: var(--cw-color-gray-darkest);
+    background: $gray-900;
   }
 
   p:last-of-type {

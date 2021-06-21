@@ -1,8 +1,6 @@
 <header class="header-content">
-  <h2><%= gettext "Sessions" %></h2>
-
-  <div class="header-content">
-    <span><%= link "New Session", to: Routes.session_path(@conn, :new), class: "button button--secondary button--sm" %></span>
+  <div class="header-content__action">
+    <%= link "New Session", to: Routes.session_path(@conn, :new), class: "button button--primary button--sm" %></div>
   </div>
 </header>
 
@@ -17,7 +15,7 @@
       <thead>
         <tr>
           <th><%= gettext "Name" %></th>
-          <th></th>
+          <th><span class="visually-hidden">Actions</span></th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +23,20 @@
       <tr>
         <td><%= link session.name, to: Routes.session_path(@conn, :show, session) %></td>
         <td>
-          <%= link "Delete", to: Routes.session_path(@conn, :delete, session), method: :delete, class: "button button--outline-secondary button--sm", data: [confirm: "Are you sure?"] %>
+          <div class="dropdown">
+            <button type="button" class="button button--link button--action" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Actions</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link "Delete",
+                    to: Routes.session_path(@conn, :delete, session),
+                    method: :delete,
+                    class: "dropdown-item",
+                    data: [confirm: "Are you sure?"] %>
+              </li>
+            </ul>
+          </div>
         </td>
       </tr>
       <% end %>

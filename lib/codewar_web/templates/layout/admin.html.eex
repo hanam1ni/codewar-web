@@ -6,4 +6,6 @@
 
     <%= @inner_content %>
   </div>
+
+  <%= render "_banner-development.html", assigns %>
 </main>
