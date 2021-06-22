@@ -18,6 +18,7 @@ defmodule Codewar.Competition.Schemas.Challenge do
     field :hint, :string
     field :answer, :string
     field :submission_cap, :integer
+    field :is_hint_enabled, :boolean
     field :started_at, :naive_datetime
     field :completed_at, :naive_datetime
 
@@ -34,6 +35,10 @@ defmodule Codewar.Competition.Schemas.Challenge do
     |> assoc_constraint(:session)
   end
 
+  def hint_enabled_changeset(%__MODULE__{} = challenge) do
+    change(challenge, is_hint_enabled: true)
+  end
+
   def started_changeset(%__MODULE__{} = challenge) do
     change(challenge, started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
   end
@@ -46,5 +51,6 @@ defmodule Codewar.Competition.Schemas.Challenge do
     challenge
     |> change(started_at: nil)
     |> change(completed_at: nil)
+    |> change(is_hint_enabled: false)
   end
 end

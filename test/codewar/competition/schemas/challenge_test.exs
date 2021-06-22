@@ -35,6 +35,15 @@ defmodule CodeWar.Competition.Schemas.ChallengeTest do
     end
   end
 
+  describe "hint_enabled_changeset/1" do
+    test "returns a valid changeset with is_hint_enabled set to true" do
+      changeset = Challenge.hint_enabled_changeset(%Challenge{})
+
+      assert changeset.valid?
+      assert changeset.changes.is_hint_enabled == true
+    end
+  end
+
   describe "started_changeset/1" do
     test "returns a valid changeset with started_at defined" do
       changeset = Challenge.started_changeset(%Challenge{})
@@ -54,7 +63,7 @@ defmodule CodeWar.Competition.Schemas.ChallengeTest do
   end
 
   describe "reset_changeset/1" do
-    test "returns a valid changeset with started_at and completed_at reset to nil" do
+    test "returns a valid changeset with resetted values for started_at, completed_at and is_hint_enabled" do
       challenge = %Challenge{
         started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
         completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
@@ -65,6 +74,7 @@ defmodule CodeWar.Competition.Schemas.ChallengeTest do
       assert changeset.valid?
       assert changeset.changes.started_at == nil
       assert changeset.changes.completed_at == nil
+      assert changeset.changes.is_hint_enabled == false
     end
   end
 end

@@ -176,15 +176,32 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
     end
   end
 
-  describe "show_hint/2" do
+  describe "enable_hint/2" do
     test "redirects given valid data", %{conn: conn} do
       session = insert(:session)
       challenge = insert(:challenge, session_id: session.id)
 
-      conn = post(conn, Routes.challenge_challenge_path(conn, :show_hint, challenge))
+      conn = put(conn, Routes.challenge_challenge_path(conn, :enable_hint, challenge))
 
       assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      expect(Competitions, :enable_challenge_hint, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :enable_hint, challenge))
+
+      assert conn.status == 302
+      assert get_flash(conn, :error) == "The hint cannot be toggled."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
     end
   end
 end

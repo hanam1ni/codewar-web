@@ -16,7 +16,6 @@ defmodule CodewarWeb.Home.IndexLive do
      |> assign(current_session: nil)
      |> assign(current_challenge: nil)
      |> assign(winner_list: [])
-     |> assign(:show_hint, false)
      |> assign(changeset: empty_answer_changeset())
      |> maybe_fetch_competition_data()}
   end
@@ -59,7 +58,6 @@ defmodule CodewarWeb.Home.IndexLive do
       socket
       |> assign(:current_session, nil)
       |> assign(:current_challenge, nil)
-      |> assign(:show_hint, false)
       |> assign(winner_list: [])
       |> assign(changeset: empty_answer_changeset())
       |> clear_flash(:error)
@@ -76,7 +74,6 @@ defmodule CodewarWeb.Home.IndexLive do
     socket =
       socket
       |> assign(:current_challenge, challenge)
-      |> assign(:show_hint, false)
       |> assign(winner_list: fetch_challenge_winner_list(challenge.id))
       |> assign(changeset: empty_answer_changeset())
       |> clear_flash(:error)
@@ -90,7 +87,6 @@ defmodule CodewarWeb.Home.IndexLive do
     socket =
       socket
       |> assign(:current_challenge, nil)
-      |> assign(:show_hint, false)
       |> assign(winner_list: [])
       |> assign(changeset: empty_answer_changeset())
       |> clear_flash(:error)
@@ -100,13 +96,8 @@ defmodule CodewarWeb.Home.IndexLive do
   end
 
   @impl true
-  def handle_info({:show_hint, challenge}, socket) do
-    socket =
-      socket
-      |> assign(:current_challenge, challenge)
-      |> assign(:show_hint, true)
-
-    {:noreply, socket}
+  def handle_info({:refresh_challenge, challenge}, socket) do
+    {:noreply, assign(socket, :current_challenge, challenge)}
   end
 
   @impl true

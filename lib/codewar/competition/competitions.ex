@@ -56,6 +56,9 @@ defmodule Codewar.Competition.Competitions do
   def reset_challenge(%Challenge{} = challenge),
     do: challenge |> Challenge.reset_changeset() |> Repo.update()
 
+  def enable_challenge_hint(%Challenge{} = challenge),
+    do: challenge |> Challenge.hint_enabled_changeset() |> Repo.update()
+
   def list_challenge_answers(challenge_id),
     do: Repo.all(AnswerQuery.list_for_challenge(challenge_id))
 

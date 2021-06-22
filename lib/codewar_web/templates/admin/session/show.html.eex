@@ -65,11 +65,13 @@
                   data: [confirm: "Are you sure?"] %>
             <% else %>
               <%= if active?(challenge) do %>
-                <%= link "Show Hint",
-                    to: Routes.challenge_challenge_path(@conn, :show_hint, challenge),
-                    method: :post,
-                    class: "button button--warning button--sm",
-                    data: [confirm: "Are you sure?"] %>
+                <%= unless challenge.is_hint_enabled do %>
+                  <%= link "Show Hint",
+                      to: Routes.challenge_challenge_path(@conn, :enable_hint, challenge),
+                      method: :put,
+                      class: "button button--warning button--sm",
+                      data: [confirm: "Are you sure?"] %>
+                <% end %>
                 <%= link "Stop",
                     to: Routes.challenge_challenge_path(@conn, :stop, challenge),
                     method: :put,
