@@ -49,7 +49,7 @@ RUN addgroup -g 1000 appuser && \
 		adduser -u 1000 -G appuser -g appuser -s /bin/sh -D appuser && \
 		chown 1000:1000 /opt/app
 
-COPY --from=build --chown=1000:1000 /app/_build/prod/rel/centauri ./
+COPY --from=build --chown=1000:1000 /app/_build/prod/rel/codewar ./
 COPY bin/start.sh ./bin/start.sh
 
 USER app_user
