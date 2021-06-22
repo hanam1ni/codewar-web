@@ -1,0 +1,15 @@
+.footer-application {
+  background: rgba($white, 0.85);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+  }
+
+  &__text {
+    margin: 0;
+  }
+}

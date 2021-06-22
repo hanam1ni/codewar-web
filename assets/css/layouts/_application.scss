@@ -6,18 +6,26 @@
   height: 100vh;
 }
 
-.layout-application .header-application > div,
-.layout-application .main-application > div {
+.layout-application .header-application__container,
+.layout-application .main-application__container,
+.layout-application .footer-application__container {
   @include make-container();
-
-  height: 100%;
 
   @include media-breakpoint-up('xl') {
     max-width: map-get($container-max-widths, 'xl');
   }
 }
 
-.layout-application .main-application > div {
+.layout-application .main-application .main-application__container {
+  height: 100%;
   padding-top: $spacer;
-  padding-bottom: $spacer;
+  padding-bottom: rem(60px);
+}
+
+.layout-application .footer-application {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  height: rem(60px);
 }

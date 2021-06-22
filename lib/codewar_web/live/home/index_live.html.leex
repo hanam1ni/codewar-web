@@ -18,13 +18,13 @@
     <%= if is_nil(@current_challenge) do %>
       <%= live_component(@socket, CodewarWeb.Home.Spinner, assigns) %>
     <% else %>
-      <section class="challenge-submission">
-        <div class="alert alert--info" role="alert"
-             phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+      <section class="challenge-submission" id="challengeSubmission" phx-hook="ChallengeSubmission">
+        <div class="alert alert--success" role="alert"
+             phx-click="lv:clear-flash" phx-value-key="success"><%= live_flash(@flash, :success) %></div>
         <div class="alert alert--danger" role="alert"
              phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></div>
 
-        <%= f = form_for @changeset, "#", [phx_submit:  :submit_answer, class: "form form--inline form-submission"] %>
+        <%= f = form_for @changeset, "#", [phx_submit:  :submit_answer, class: "form form--inline form-submission challenge-submission__form"] %>
           <%= hidden_input f, :challenge_id, value: @current_challenge.id %>
 
           <div class="form__field form-submission__username">
@@ -58,7 +58,14 @@
   </div>
 </main>
 
-<div class="banner-announcement">
-  <div class="alert alert--success banner-announcement__alert" role="alert"
-       phx-click="lv:clear-flash" phx-value-key="success"><%= live_flash(@flash, :success) %></div>
+<%= unless is_nil(@current_challenge) do %>
+<div class="footer-application">
+  <div class="footer-application__container">
+    <ul class="list-winner">
+      <%= for index <- 1..@current_challenge.submission_cap do %>
+        <li class="list-winner__item"><%= format_winner_name(@winner_list, index, @current_challenge.submission_cap) %></li>
+      <% end%>
+    </ul>
+  </div>
 </div>
+<% end%>

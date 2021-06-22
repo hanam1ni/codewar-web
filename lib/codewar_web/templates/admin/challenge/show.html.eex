@@ -40,7 +40,7 @@
 
 <section class="challenge-info">
   <header class="header-content">
-    <h2><%= gettext("Submitted Answers") %></h2>
+    <h2 class="header-content__title"><%= gettext("Submitted Answers") %></h2>
   </header>
 
   <div class="card">
