@@ -1,52 +1,56 @@
-FROM hexpm/elixir:1.11.3-erlang-23.2.1-alpine-3.12.1 AS build
+ARG ELIXIR_IMAGE_VERSION=1.12.1
+ARG ERLANG_IMAGE_VERSION=24.0.1
+ARG RELEASE_IMAGE_VERSION=3.13.3
 
-# install build dependencies
-RUN apk add --no-cache build-base npm git && \
-    mix local.hex --force && \
-    mix local.rebar --force
+FROM hexpm/elixir:${ELIXIR_IMAGE_VERSION}-erlang-${ERLANG_IMAGE_VERSION}-alpine-${RELEASE_IMAGE_VERSION} AS build
 
-# prepare build dir
+RUN apk update && \
+    apk upgrade --no-cache && \
+    apk add --no-cache \
+      nodejs \
+      npm \
+      git \
+      build-base && \
+    mix local.rebar --force && \
+    mix local.hex --force
+
 WORKDIR /app
 
-# set build ENV
+COPY . .
+
 ENV MIX_ENV=prod
 
-# install mix dependencies
-COPY mix.exs mix.lock ./
-COPY config config
-RUN mix do deps.get, deps.compile
+RUN mix do deps.get, deps.compile, compile
 
-# build assets
-COPY assets/package.json assets/package-lock.json ./assets/
-RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
+RUN cd assets && \
+		npm ci --progress=false --no-audit --loglevel=error && \
+		npm run deploy && \
+		cd - && \
+		mix phx.digest
 
-COPY priv priv
-COPY assets assets
-RUN npm run --prefix ./assets deploy
-RUN mix phx.digest
+RUN mix release
 
-# compile and build release
-COPY lib lib
-# uncomment COPY if rel/ exists
-# COPY rel rel
-RUN mix do compile, release
+#
+# Release
+#
+FROM alpine:${RELEASE_IMAGE_VERSION} AS app
 
-# prepare release image
-FROM alpine:3.12.1 AS app
+RUN apk update && \
+    apk add --no-cache \
+    libstdc++ \
+    libgcc \
+    bash \
+    openssl-dev
 
-RUN apk add --no-cache openssl ncurses-libs
+WORKDIR /opt/app
+EXPOSE 4000
 
-WORKDIR /app
+RUN addgroup -g 1000 appuser && \
+		adduser -u 1000 -G appuser -g appuser -s /bin/sh -D appuser && \
+		chown 1000:1000 /opt/app
 
-# Setup non-root user
-RUN addgroup -S app_group && \
-    adduser -s /bin/sh -G app_group -D app_user && \
-    chown app_user:app_group /app
-
-COPY --from=build --chown=app_user:app_group /app/_build/prod/rel/codewar ./
+COPY --from=build --chown=1000:1000 /app/_build/prod/rel/centauri ./
 COPY bin/start.sh ./bin/start.sh
-
-ENV HOME=/app
 
 USER app_user
 

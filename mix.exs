@@ -5,7 +5,7 @@ defmodule Codewar.MixProject do
     [
       app: :codewar,
       version: "0.2.0",
-      elixir: "~> 1.11.3",
+      elixir: "~> 1.12.0",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -40,18 +40,18 @@ defmodule Codewar.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:ecto_sql, "~> 3.4"},
-      {:ex_machina, "~> 2.7.0", [only: :test]},
-      {:excoveralls, "~> 0.14.0", [only: :test]},
       {:credo, "~> 1.5.5", [only: [:dev, :test], runtime: false]},
       {:dialyxir, "~> 1.1.0", [only: [:dev], runtime: false]},
+      {:ecto_sql, "~> 3.4"},
       {:earmark, "~> 1.4"},
+      {:ex_machina, "~> 2.7.0", [only: :test]},
+      {:excoveralls, "~> 0.14.0", [only: :test]},
       {:faker, "~> 0.16.0", [only: :test]},
       {:floki, ">= 0.27.0", only: :test},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:mimic, "~> 1.4.0", [only: :test]},
-      {:phoenix, "~> 1.5.8"},
+      {:phoenix, "~> 1.5.9"},
       {:phoenix_ecto, "~> 4.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.1"},

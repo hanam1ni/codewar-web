@@ -61,12 +61,6 @@ defmodule CodewarWeb.Router do
     post "/prime/:answer", Api.PrimeController, :verify_answer
   end
 
-  defp basic_auth(conn, _opts) do
-    username = System.fetch_env!("BASIC_AUTH_USERNAME")
-    password = System.fetch_env!("BASIC_AUTH_PASSWORD")
-    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
-  end
-
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
@@ -82,6 +76,15 @@ defmodule CodewarWeb.Router do
       # coveralls-ignore-start
       live_dashboard "/dashboard", metrics: CodewarWeb.Telemetry
       # coveralls-ignore-stop
+    end
+  end
+
+  # Wrap method definition to avoid unused method compilation error in non :prod environments
+  if Mix.env() == :prod do
+    defp basic_auth(conn, _opts) do
+      username = System.fetch_env!("BASIC_AUTH_USERNAME")
+      password = System.fetch_env!("BASIC_AUTH_PASSWORD")
+      Plug.BasicAuth.basic_auth(conn, username: username, password: password)
     end
   end
 end

@@ -6,11 +6,15 @@ Real-time-based Web application to run competitive programming events at Nimble.
 
 ### Erlang & Elixir
 
-* Erlang 23.2.1 and Elixir 1.11.3
+* Erlang 24.0.1
+
+* Elixir 1.12.1
 
 * Recommended version manager.
 
-  - [asdf](https://github.com/asdf-vm/asdf) Erlang & Elixir
+  - [asdf](https://github.com/asdf-vm/asdf)
+  - [asdf-erlang](https://github.com/asdf-vm/asdf-erlang)
+  - [asdf-elixir](https://github.com/asdf-vm/asdf-elixir)
 
 ### Development
 
@@ -60,7 +64,7 @@ Real-time-based Web application to run competitive programming events at Nimble.
 
 ### Production
 
-* Buidl Docker image
+* Build Docker image
 
   ```sh
   docker-compose build
