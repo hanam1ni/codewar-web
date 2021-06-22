@@ -15,6 +15,7 @@ defmodule Codewar.Competition.Schemas.Answer do
     field :username, :string
     field :answer, :string
     field :is_valid, :boolean
+    field :is_rejected, :boolean
 
     belongs_to :challenge, Challenge, foreign_key: :challenge_id
 
@@ -22,10 +23,15 @@ defmodule Codewar.Competition.Schemas.Answer do
   end
 
   @doc false
-  def changeset(answer, attrs) do
+  def changeset(answer \\ %__MODULE__{}, attrs) do
     answer
-    |> cast(attrs, [:username, :answer, :is_valid, :challenge_id])
+    |> cast(attrs, [:username, :answer, :is_valid, :is_rejected, :challenge_id])
     |> validate_required([:username, :answer, :is_valid, :challenge_id])
     |> assoc_constraint(:challenge)
+  end
+
+  @doc false
+  def rejected_changeset(%__MODULE__{} = answer) do
+    change(answer, is_rejected: true)
   end
 end

@@ -38,7 +38,7 @@
   </div>
 </section>
 
-<section class="challenge-info">
+<section class="challenge-answer">
   <header class="header-content">
     <h2 class="header-content__title"><%= gettext("Submitted Answers") %></h2>
   </header>
@@ -50,22 +50,39 @@
         <p class="blank-state__text"><%= gettext "No answers yet" %></p>
       </div>
       <% else %>
-      <table class="table table--full-width table-answer">
+      <table class="table table--full-width">
         <thead>
           <tr>
-            <th class="table-answer__username"><%= gettext "Username" %></th>
-            <th class="table-answer__answer"><%= gettext "Answer" %></th>
-            <th class="table-answer__validity"><%= gettext "Validity" %></th>
-            <th class="table-answer__timestamp"><%= gettext "Submission Time" %></th>
+            <th class="table__username"><%= gettext "Username" %></th>
+            <th class="table__answer"><%= gettext "Answer" %></th>
+            <th class="table__validity"><%= gettext "Validity" %></th>
+            <th class="table__timestamp"><%= gettext "Submission Time" %></th>
+            <th class="table__action"><span class="visually-hidden">Actions</span></th>
           </tr>
         </thead>
         <tbody>
         <%= for answer <- @answers do %>
           <tr>
-            <td class="table-answer__username"><%= answer.username %></td>
-            <td class="table-answer__answer"><%= answer.answer %></td>
-            <td class="table-answer__validity"><%= to_validity_status(answer) %></td>
-            <td class="table-answer__timestamp"><%= answer.inserted_at %></td>
+            <td class="table__username"><%= answer.username %></td>
+            <td class="table__answer"><%= answer.answer %></td>
+            <td class="table__validity"><%= to_validity_status(answer) %></td>
+            <td class="table__timestamp"><%= answer.inserted_at %></td>
+            <td class="table__action">
+              <div class="dropdown">
+                <button type="button" class="button button--link button--action" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="visually-hidden">Actions</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link "Reject",
+                    to: Routes.challenge_answer_path(@conn, :reject, @challenge, answer),
+                    method: :put,
+                    class: "dropdown-item",
+                    data: [confirm: "Are you sure?"] %>
+                  </li>
+                </ul>
+              </div>
+            </td>
           </tr>
         <% end %>
         </tbody>

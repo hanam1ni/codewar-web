@@ -12,21 +12,83 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/codewar_web/templates/admin/dashboard/index.html.eex:13
+#: lib/codewar_web/templates/admin/dashboard/index.html.eex:11
 msgid "No sessions"
 msgstr ""
 
 #, elixir-format
-#: lib/codewar_web/live/page_live.html.leex:2
-msgid "Welcome to %{name}!"
-msgstr ""
-
-#, elixir-format
-#: lib/codewar_web/templates/admin/dashboard/index.html.eex:19
+#: lib/codewar_web/templates/admin/dashboard/index.html.eex:17
+#: lib/codewar_web/templates/admin/session/show.html.eex:51
 msgid "Name"
 msgstr ""
 
 #, elixir-format
-#: lib/codewar_web/templates/admin/dashboard/index.html.eex:2
-msgid "Sessions"
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:28
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:57
+msgid "Answer"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:23
+msgid "Hint"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/session/show.html.eex:45
+msgid "No challenges"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:18
+msgid "Requirement"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:33
+msgid "Submission Cap"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:4
+msgid "No content"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:14
+msgid "Invalid"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:50
+msgid "No answers yet"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:59
+msgid "Submission Time"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:43
+msgid "Submitted Answers"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:56
+msgid "Username"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:8
+msgid "Valid"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/templates/admin/challenge/show.html.eex:58
+msgid "Validity"
+msgstr ""
+
+#, elixir-format
+#: lib/codewar_web/views/admin/challenge_view.ex:11
+msgid "Rejected"
 msgstr ""

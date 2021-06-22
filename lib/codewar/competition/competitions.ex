@@ -59,6 +59,11 @@ defmodule Codewar.Competition.Competitions do
   def list_challenge_answers(challenge_id),
     do: Repo.all(AnswerQuery.list_for_challenge(challenge_id))
 
+  def list_valid_challenge_answers(challenge_id),
+    do: Repo.all(AnswerQuery.list_valid_for_challenge(challenge_id))
+
+  def get_answer(id), do: Repo.get_by(Answer, id: id)
+
   def create_answer(attrs \\ %{}),
     do: %Answer{} |> Answer.changeset(attrs) |> Repo.insert()
 
@@ -81,14 +86,16 @@ defmodule Codewar.Competition.Competitions do
     end
   end
 
-  defp verify_submission_cap_for(challenge) do
-    challenge_answer = list_challenge_answers(challenge.id)
-    valid_answer_list = Enum.filter(challenge_answer, fn answer -> answer.is_valid end)
-    valid_answer_count = Enum.count(valid_answer_list)
-    remaining_answer_slot = challenge.submission_cap - valid_answer_count
+  def reject_answer(%Answer{} = answer),
+    do: answer |> Answer.rejected_changeset() |> Repo.update()
 
-    if valid_answer_count < challenge.submission_cap do
-      {:ok, remaining_answer_slot}
+  defp verify_submission_cap_for(challenge) do
+    valid_answers = list_valid_challenge_answers(challenge.id)
+    valid_answers_count = Enum.count(valid_answers)
+    remaining_answer_slots = challenge.submission_cap - valid_answers_count
+
+    if valid_answers_count < challenge.submission_cap do
+      {:ok, remaining_answer_slots}
     else
       {:error, :submission_cap_reached}
     end

@@ -228,6 +228,26 @@ defmodule Codewar.Competition.SessionsTest do
     end
   end
 
+  describe "list_challenge_answers/1" do
+    test "returns all challenge answers" do
+      challenge = insert(:challenge, session: build(:session))
+      answer = insert(:answer, challenge_id: challenge.id)
+
+      assert Competitions.list_challenge_answers(challenge.id) == [answer]
+    end
+  end
+
+  describe "list_valid_challenge_answers/1" do
+    test "returns challenge answers which are valid AND not rejected" do
+      challenge = insert(:challenge, session: build(:session))
+      valid_answer = insert(:valid_answer, challenge_id: challenge.id)
+      _invalid_answer = insert(:answer, is_valid: false, challenge_id: challenge.id)
+      _rejected_answer = insert(:rejected_answer, challenge_id: challenge.id)
+
+      assert Competitions.list_valid_challenge_answers(challenge.id) == [valid_answer]
+    end
+  end
+
   describe "create_answer/1" do
     test "creates an answer given valid params" do
       challenge = insert(:challenge, submission_cap: 1, session: build(:session))

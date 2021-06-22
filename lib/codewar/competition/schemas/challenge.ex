@@ -27,22 +27,22 @@ defmodule Codewar.Competition.Schemas.Challenge do
     timestamps()
   end
 
-  def changeset(challenge, attrs) do
+  def changeset(challenge \\ %__MODULE__{}, attrs) do
     challenge
     |> cast(attrs, [:name, :requirement, :hint, :answer, :submission_cap, :session_id])
     |> validate_required([:name, :requirement, :answer, :submission_cap, :session_id])
     |> assoc_constraint(:session)
   end
 
-  def started_changeset(challenge) do
+  def started_changeset(%__MODULE__{} = challenge) do
     change(challenge, started_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
   end
 
-  def completed_changeset(challenge) do
+  def completed_changeset(%__MODULE__{} = challenge) do
     change(challenge, completed_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
   end
 
-  def reset_changeset(challenge) do
+  def reset_changeset(%__MODULE__{} = challenge) do
     challenge
     |> change(started_at: nil)
     |> change(completed_at: nil)

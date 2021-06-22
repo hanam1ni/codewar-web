@@ -32,4 +32,12 @@ defmodule CodeWar.Competition.Schemas.AnswerTest do
              }
     end
   end
+
+  describe "rejected_changeset/1" do
+    test "set the attribute is_rejected to true" do
+      changeset = Answer.rejected_changeset(%Answer{})
+
+      assert changeset.changes.is_rejected
+    end
+  end
 end

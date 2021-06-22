@@ -31,7 +31,15 @@ defmodule CodewarWeb.Admin.ChallengeViewTest do
       answer = insert(:answer, is_valid: false, challenge_id: challenge.id)
 
       assert ChallengeView.to_validity_status(answer) ==
-               content_tag(:span, "Invalid", class: "badge badge--danger")
+               content_tag(:span, "Invalid", class: "badge badge--warning")
+    end
+
+    test "returns a rejected status badge given a rejected answer" do
+      challenge = insert(:challenge, session: build(:session))
+      answer = insert(:answer, is_rejected: true, challenge_id: challenge.id)
+
+      assert ChallengeView.to_validity_status(answer) ==
+               content_tag(:span, "Rejected", class: "badge badge--danger")
     end
   end
 end

@@ -110,6 +110,11 @@ defmodule CodewarWeb.Home.IndexLive do
   end
 
   @impl true
+  def handle_info({:rejected_answer, challenge}, socket) do
+    {:noreply, assign(socket, :winner_list, fetch_challenge_winner_list(challenge.id))}
+  end
+
+  @impl true
   def handle_info({:announce_winner, challenge_id}, socket) do
     socket =
       socket
@@ -160,8 +165,7 @@ defmodule CodewarWeb.Home.IndexLive do
 
   defp fetch_challenge_winner_list(challenge_id) do
     challenge_id
-    |> Competitions.list_challenge_answers()
-    |> Enum.filter(fn answer -> answer.is_valid end)
+    |> Competitions.list_valid_challenge_answers()
     |> Enum.map(fn answer -> answer.username end)
   end
 
