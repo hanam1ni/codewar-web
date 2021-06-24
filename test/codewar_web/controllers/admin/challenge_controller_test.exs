@@ -21,6 +21,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
       conn =
         post(conn, Routes.session_challenge_path(conn, :create, session), challenge: valid_attrs)
 
+      assert conn.status == 302
       assert %{id: challenge_id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.challenge_path(conn, :show, challenge_id)
     end
@@ -63,6 +64,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_path(conn, :update, challenge), challenge: valid_attrs)
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.challenge_path(conn, :show, challenge)
     end
 
@@ -82,6 +84,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = delete(conn, Routes.challenge_path(conn, :delete, challenge))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, challenge.session_id)
     end
   end
@@ -93,6 +96,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -106,6 +110,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :start, challenge))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The challenge cannot be started."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
@@ -120,6 +125,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -133,6 +139,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :stop, challenge))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The challenge cannot be stopped."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
@@ -147,6 +154,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
     end
 
@@ -160,6 +168,7 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
 
       conn = put(conn, Routes.challenge_challenge_path(conn, :reset, challenge))
 
+      assert conn.status == 302
       assert get_flash(conn, :error) == "The challenge cannot be reset."
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
 
@@ -167,14 +176,32 @@ defmodule CodewarWeb.Admin.ChallengeControllerTest do
     end
   end
 
-  describe "show_hint/2" do
+  describe "enable_hint/2" do
     test "redirects given valid data", %{conn: conn} do
       session = insert(:session)
       challenge = insert(:challenge, session_id: session.id)
 
-      conn = post(conn, Routes.challenge_challenge_path(conn, :show_hint, challenge))
+      conn = put(conn, Routes.challenge_challenge_path(conn, :enable_hint, challenge))
 
+      assert conn.status == 302
       assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+    end
+
+    test "sets error flash and redirects given invalid data", %{conn: conn} do
+      session = insert(:session)
+      challenge = insert(:challenge, session_id: session.id)
+
+      expect(Competitions, :enable_challenge_hint, fn _ ->
+        {:error, %Ecto.Changeset{}}
+      end)
+
+      conn = put(conn, Routes.challenge_challenge_path(conn, :enable_hint, challenge))
+
+      assert conn.status == 302
+      assert get_flash(conn, :error) == "The hint cannot be toggled."
+      assert redirected_to(conn) == Routes.session_path(conn, :show, session)
+
+      verify!()
     end
   end
 end

@@ -1,27 +1,20 @@
 defmodule Codewar.Competition.Queries.AnswerQuery do
-  @moduledoc """
-  Query functions for managing Answers
-  """
-
   import Ecto.Query, warn: false
-  alias Codewar.Repo
 
   alias Codewar.Competition.Schemas.Answer
 
-  def list_for_challenge(challenge_id) do
-    Answer
-    |> where(challenge_id: ^challenge_id)
-    |> order_by(asc: :inserted_at)
-    |> Repo.all()
+  def list_for_challenge(query \\ base(), challenge_id) do
+    where(query, challenge_id: ^challenge_id)
   end
 
-  def create(attrs \\ %{}) do
-    %Answer{}
-    |> Answer.changeset(attrs)
-    |> Repo.insert()
+  def list_valid_for_challenge(query \\ base(), challenge_id) do
+    query
+    |> list_for_challenge(challenge_id)
+    |> where(is_valid: true)
+    |> where(is_rejected: false)
   end
 
-  def change(%Answer{} = answer, attrs \\ %{}) do
-    Answer.changeset(answer, attrs)
+  defp base do
+    order_by(Answer, asc: :inserted_at)
   end
 end

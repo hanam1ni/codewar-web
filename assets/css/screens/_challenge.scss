@@ -1,0 +1,36 @@
+body.challenge.show {
+  .challenge-answer {
+    margin-top: $spacer;
+  }
+
+  .table {
+    table-layout: fixed;
+
+    &__username,
+    &__answer,
+    &__validity,
+    &__timestamp {
+      overflow: auto;
+    }
+
+    &__username {
+      width: 20%;
+    }
+
+    &__answer {
+      width: 30%;
+    }
+
+    &__validity {
+      width: 20%;
+    }
+
+    &__timestamp {
+      width: 20%;
+    }
+
+    &__action {
+      width: 10%;
+    }
+  }
+}

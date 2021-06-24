@@ -1,11 +1,11 @@
-@function em($values, $base-font-size: 16px) {
+@function em($values, $font-size-base: 16px) {
   $list: ();
 
   @each $value in $values {
     @if ($value == 0 or $value == auto) {
       $list: append($list, $value);
     } @else {
-      $em-value: ($value / $base-font-size)+em;
+      $em-value: ($value / $font-size-base)+em;
       $list: append($list, $em-value);
     }
   }
@@ -13,14 +13,14 @@
   @return $list;
 }
 
-@function rem($values, $base-font-size: 16px) {
+@function rem($values, $font-size-base: 16px) {
   $list: ();
 
   @each $value in $values {
     @if ($value == 0 or $value == auto) {
       $list: append($list, $value);
     } @else {
-      $rem-value: ($value / $base-font-size)+rem;
+      $rem-value: ($value / $font-size-base)+rem;
       $list: append($list, $rem-value);
     }
   }

@@ -1,21 +1,23 @@
 .header-admin {
-  background: #fff;
-  border-bottom: 1px solid map-get($color-gray, 'primary');
-  box-shadow: $base-box-shadow;
+  background: $white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $box-shadow-sm;
 
   &__container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     height: 100%;
   }
 
   &__name {
-    font-size: rem(20px);
+    font-size: rem(26px);
     font-weight: bold;
-  }
 
-  &__navigation {
-    margin-left: $grid-gutter-width;
+    &, &:hover {
+      color: $body-color;
+      text-decoration: none;
+    }
   }
 }

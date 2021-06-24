@@ -22,13 +22,17 @@ defmodule CodewarWeb.Router do
     plug :put_layout, {CodewarWeb.LayoutView, :admin}
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   scope "/", CodewarWeb do
     pipe_through :browser
 
     live "/", Home.IndexLive, :index, as: :home
   end
 
-  scope "/admin/", CodewarWeb do
+  scope "/admin", CodewarWeb do
     pipe_through [:browser, :admin]
 
     get "/", Admin.DashboardController, :index
@@ -37,7 +41,9 @@ defmodule CodewarWeb.Router do
       put "/start", Admin.ChallengeController, :start
       put "/stop", Admin.ChallengeController, :stop
       put "/reset", Admin.ChallengeController, :reset
-      post "/hint", Admin.ChallengeController, :show_hint
+      put "/hint", Admin.ChallengeController, :enable_hint
+
+      put "/reject/:answer_id", Admin.AnswerController, :reject
     end
 
     resources "/sessions", Admin.SessionController, except: [:index] do
@@ -49,10 +55,10 @@ defmodule CodewarWeb.Router do
     end
   end
 
-  defp basic_auth(conn, _opts) do
-    username = System.fetch_env!("BASIC_AUTH_USERNAME")
-    password = System.fetch_env!("BASIC_AUTH_PASSWORD")
-    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
+  scope "/api", CodewarWeb do
+    pipe_through :api
+
+    post "/prime/:answer", Api.PrimeController, :verify_answer
   end
 
   # Enables LiveDashboard only for development
@@ -70,6 +76,15 @@ defmodule CodewarWeb.Router do
       # coveralls-ignore-start
       live_dashboard "/dashboard", metrics: CodewarWeb.Telemetry
       # coveralls-ignore-stop
+    end
+  end
+
+  # Wrap method definition to avoid unused method compilation error in non :prod environments
+  if Mix.env() == :prod do
+    defp basic_auth(conn, _opts) do
+      username = System.fetch_env!("BASIC_AUTH_USERNAME")
+      password = System.fetch_env!("BASIC_AUTH_PASSWORD")
+      Plug.BasicAuth.basic_auth(conn, username: username, password: password)
     end
   end
 end

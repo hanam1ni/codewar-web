@@ -9,7 +9,8 @@ defmodule Codewar.Competition.ChallengeFactory do
           requirement: Faker.Markdown.markdown(),
           hint: Faker.Markdown.ordered_list(),
           answer: Faker.Team.creature(),
-          submission_cap: Enum.random(1..4)
+          submission_cap: Enum.random(1..4),
+          is_hint_enabled: false
         }
       end
     end

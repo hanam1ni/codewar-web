@@ -4,22 +4,37 @@
 
 <section class="session-info">
   <header class="header-content">
-    <h2><%= @session.name %></h2>
+    <h2 class="header-content__title">
+      <%= link @session.name, to: Routes.session_path(@conn, :edit, @session) %>
+    </h2>
 
     <div class="header-content__action">
-      <%= link "Edit", to: Routes.session_path(@conn, :edit, @session), class: "button button--secondary button--sm" %>
-
-      <%= link "New Challenge", to: Routes.session_challenge_path(@conn, :new, @session), class: "button button--secondary button--sm" %>
 
       <%= if completed?(@session) do %>
-        <%= link "Reset", to: Routes.session_session_path(@conn, :reset, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+        <%= link "Reset",
+            to: Routes.session_session_path(@conn, :reset, @session),
+            method: :put,
+            class: "button button--danger button--sm",
+            data: [confirm: "Are you sure?"] %>
       <% else %>
         <%= if active?(@session) do %>
-          <%= link "Stop", to: Routes.session_session_path(@conn, :stop, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+          <%= link "Stop",
+              to: Routes.session_session_path(@conn, :stop, @session),
+              method: :put,
+              class: "button button--danger button--sm",
+              data: [confirm: "Are you sure?"] %>
         <% else %>
-          <%= link "Start", to: Routes.session_session_path(@conn, :start, @session), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+          <%= link "Start",
+              to: Routes.session_session_path(@conn, :start, @session),
+              method: :put,
+              class: "button button--danger button--sm",
+              data: [confirm: "Are you sure?"] %>
         <% end %>
       <% end %>
+
+      <%= link "New Challenge",
+          to: Routes.session_challenge_path(@conn, :new, @session),
+          class: "button button--primary button--sm" %>
     </div>
   </header>
 
@@ -34,7 +49,7 @@
         <thead>
         <tr>
           <th><%= gettext "Name" %></th>
-          <th></th>
+          <th><span class="visually-hidden">Actions</span></th>
         </tr>
         </thead>
         <tbody>
@@ -42,20 +57,49 @@
         <tr>
           <td><%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge) %></td>
           <td>
-            <%= link "Delete", to: Routes.challenge_path(@conn, :delete, challenge), method: :delete, class: "button button--outline-secondary button--sm", data: [confirm: "Are you sure?"] %>
-
-            <%= if active?(@session) do %>
-              <%= if completed?(challenge) do %>
-                <%= link "Reset", to: Routes.challenge_challenge_path(@conn, :reset, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
-              <% else %>
-                <%= if active?(challenge) do %>
-                  <%= link "Show Hint", to: Routes.challenge_challenge_path(@conn, :show_hint, challenge), method: :post, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
-                  <%= link "Stop", to: Routes.challenge_challenge_path(@conn, :stop, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
-                <% else %>
-                  <%= link "Start", to: Routes.challenge_challenge_path(@conn, :start, challenge), method: :put, class: "button button--primary button--sm", data: [confirm: "Are you sure?"] %>
+            <%= if completed?(challenge) do %>
+              <%= link "Reset",
+                  to: Routes.challenge_challenge_path(@conn, :reset, challenge),
+                  method: :put,
+                  class: "button button--danger button--sm",
+                  data: [confirm: "Are you sure?"] %>
+            <% else %>
+              <%= if active?(challenge) do %>
+                <%= unless challenge.is_hint_enabled do %>
+                  <%= link "Show Hint",
+                      to: Routes.challenge_challenge_path(@conn, :enable_hint, challenge),
+                      method: :put,
+                      class: "button button--warning button--sm",
+                      data: [confirm: "Are you sure?"] %>
                 <% end %>
+                <%= link "Stop",
+                    to: Routes.challenge_challenge_path(@conn, :stop, challenge),
+                    method: :put,
+                    class: "button button--danger button--sm",
+                    data: [confirm: "Are you sure?"] %>
+              <% else %>
+                <%= link "Start",
+                    to: Routes.challenge_challenge_path(@conn, :start, challenge),
+                    method: :put,
+                    class: "button button--danger button--sm",
+                    data: [confirm: "Are you sure?"] %>
               <% end %>
-             <% end %>
+            <% end %>
+
+            <div class="dropdown">
+              <button type="button" class="button button--link button--action" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Actions</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link "Delete",
+                      to: Routes.challenge_path(@conn, :delete, challenge),
+                      method: :delete,
+                      class: "dropdown-item",
+                      data: [confirm: "Are you sure?"] %>
+                </li>
+              </ul>
+            </div>
           </td>
         </tr>
         <% end %>

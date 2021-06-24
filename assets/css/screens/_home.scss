@@ -15,6 +15,6 @@ body.home {
     padding-top: $spacer * 2;
     padding-bottom: $spacer;
 
-    border-top: 1px solid var(--cw-color-gray-primary);
+    border-top: 1px solid $border-color;
   }
 }

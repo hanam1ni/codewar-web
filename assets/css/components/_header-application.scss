@@ -1,7 +1,7 @@
 .header-application {
-  background: #fff;
-  border-bottom: 1px solid map-get($color-gray, 'primary');
-  box-shadow: $base-box-shadow;
+  background: $white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $box-shadow-sm;
 
   &__container {
     display: flex;

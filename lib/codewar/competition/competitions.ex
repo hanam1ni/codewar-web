@@ -1,7 +1,5 @@
 defmodule Codewar.Competition.Competitions do
-  @moduledoc """
-  The Competition context.
-  """
+  alias Codewar.Repo
 
   alias Codewar.Competition.Queries.AnswerQuery
   alias Codewar.Competition.Queries.ChallengeQuery
@@ -10,90 +8,99 @@ defmodule Codewar.Competition.Competitions do
   alias Codewar.Competition.Schemas.Challenge
   alias Codewar.Competition.Schemas.Session
 
-  def list_sessions do
-    SessionQuery.list()
+  def list_sessions, do: Repo.all(SessionQuery.list())
+
+  def get_session(id) do
+    Session
+    |> SessionQuery.with_challenges()
+    |> Repo.get_by(id: id)
   end
 
-  def list_challenge_answers(chalenge_id) do
-    AnswerQuery.list_for_challenge(chalenge_id)
-  end
+  def get_active_session, do: Repo.one(SessionQuery.list_active())
 
-  def get_challenge(id), do: ChallengeQuery.get(id)
+  def create_session(attrs \\ %{}),
+    do: %Session{} |> Session.changeset(attrs) |> Repo.insert()
 
-  def get_session(id), do: SessionQuery.get(id)
+  def update_session(%Session{} = session, attrs),
+    do: session |> Session.changeset(attrs) |> Repo.update()
 
-  def get_active_challenge, do: ChallengeQuery.get_active()
+  def delete_session(%Session{} = session), do: Repo.delete(session)
 
-  def get_active_session, do: SessionQuery.get_active()
+  def mark_session_as_started(%Session{} = session),
+    do: session |> Session.started_changeset() |> Repo.update()
+
+  def mark_session_as_completed(%Session{} = session),
+    do: session |> Session.completed_changeset() |> Repo.update()
+
+  def reset_session(%Session{} = session),
+    do: session |> Session.reset_changeset() |> Repo.update()
+
+  def get_challenge(id), do: Repo.get_by(Challenge, id: id)
+
+  def get_active_challenge, do: Repo.one(ChallengeQuery.list_active())
+
+  def create_challenge(attrs \\ %{}),
+    do: %Challenge{} |> Challenge.changeset(attrs) |> Repo.insert()
+
+  def update_challenge(%Challenge{} = challenge, attrs),
+    do: challenge |> Challenge.changeset(attrs) |> Repo.update()
+
+  def delete_challenge(%Challenge{} = challenge), do: Repo.delete(challenge)
+
+  def mark_challenge_as_started(%Challenge{} = challenge),
+    do: challenge |> Challenge.started_changeset() |> Repo.update()
+
+  def mark_challenge_as_completed(%Challenge{} = challenge),
+    do: challenge |> Challenge.completed_changeset() |> Repo.update()
+
+  def reset_challenge(%Challenge{} = challenge),
+    do: challenge |> Challenge.reset_changeset() |> Repo.update()
+
+  def enable_challenge_hint(%Challenge{} = challenge),
+    do: challenge |> Challenge.hint_enabled_changeset() |> Repo.update()
+
+  def list_challenge_answers(challenge_id),
+    do: Repo.all(AnswerQuery.list_for_challenge(challenge_id))
+
+  def list_valid_challenge_answers(challenge_id),
+    do: Repo.all(AnswerQuery.list_valid_for_challenge(challenge_id))
+
+  def get_answer(id), do: Repo.get_by(Answer, id: id)
+
+  def create_answer(attrs \\ %{}),
+    do: %Answer{} |> Answer.changeset(attrs) |> Repo.insert()
 
   def validate_and_create_answer(%{"challenge_id" => challenge_id, "answer" => answer} = attrs) do
     with %Challenge{} = challenge <- get_challenge(challenge_id),
+         {:ok, _remaining_answer_slot} <- verify_submission_cap_for(challenge),
          is_valid <- challenge.answer == answer,
          {:ok, %Answer{} = created_answer} <-
-           AnswerQuery.create(Map.put(attrs, "is_valid", is_valid)) do
+           create_answer(Map.put(attrs, "is_valid", is_valid)) do
       {:ok, created_answer}
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:error, changeset}
+
+      {:error, :submission_cap_reached} ->
+        {:error, :submission_cap_reached}
 
       nil ->
         {:error, :invalid_challenge}
     end
   end
 
-  def create_challenge(attrs \\ %{}), do: ChallengeQuery.create(attrs)
+  def reject_answer(%Answer{} = answer),
+    do: answer |> Answer.rejected_changeset() |> Repo.update()
 
-  def create_session(attrs \\ %{}), do: SessionQuery.create(attrs)
+  defp verify_submission_cap_for(challenge) do
+    valid_answers = list_valid_challenge_answers(challenge.id)
+    valid_answers_count = Enum.count(valid_answers)
+    remaining_answer_slots = challenge.submission_cap - valid_answers_count
 
-  def update_challenge(%Challenge{} = challenge, attrs) do
-    ChallengeQuery.update(challenge, attrs)
-  end
-
-  def update_session(%Session{} = session, attrs) do
-    SessionQuery.update(session, attrs)
-  end
-
-  def delete_challenge(%Challenge{} = challenge) do
-    ChallengeQuery.delete(challenge)
-  end
-
-  def delete_session(%Session{} = session) do
-    SessionQuery.delete(session)
-  end
-
-  def change_answer(%Answer{} = answer, attrs \\ %{}) do
-    AnswerQuery.change(answer, attrs)
-  end
-
-  def change_challenge(%Challenge{} = challenge, attrs \\ %{}) do
-    ChallengeQuery.change(challenge, attrs)
-  end
-
-  def change_session(%Session{} = session, attrs \\ %{}) do
-    SessionQuery.change(session, attrs)
-  end
-
-  def mark_challenge_as_started(%Challenge{} = challenge) do
-    ChallengeQuery.mark_as_started(challenge)
-  end
-
-  def mark_challenge_as_completed(%Challenge{} = challenge) do
-    ChallengeQuery.mark_as_completed(challenge)
-  end
-
-  def reset_challenge(%Challenge{} = challenge) do
-    ChallengeQuery.reset(challenge)
-  end
-
-  def mark_session_as_started(%Session{} = session) do
-    SessionQuery.mark_as_started(session)
-  end
-
-  def mark_session_as_completed(%Session{} = session) do
-    SessionQuery.mark_as_completed(session)
-  end
-
-  def reset_session(%Session{} = session) do
-    SessionQuery.reset(session)
+    if valid_answers_count < challenge.submission_cap do
+      {:ok, remaining_answer_slots}
+    else
+      {:error, :submission_cap_reached}
+    end
   end
 end

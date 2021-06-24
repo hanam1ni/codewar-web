@@ -3,7 +3,7 @@
 </div>
 
 <header class="header-content">
-  <h2>New Challenge</h2>
+  <h2 class="header-content__title">New Challenge</h2>
 </header>
 
 <%= render "_form.html", Map.put(assigns, :action, Routes.session_challenge_path(@conn, :create, @session)) %>

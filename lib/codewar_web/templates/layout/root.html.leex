@@ -3,9 +3,7 @@
   <head>
     <%= render "_head.html", assigns %>
   </head>
-    <body class="<%= page_class_name(@conn) %>">
+  <body class="<%= page_class_name(@conn) %>">
     <%= @inner_content %>
-
-    <%= render "_banner-development.html", assigns %>
-    </body>
+  </body>
 </html>
