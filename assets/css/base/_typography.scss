@@ -8,22 +8,24 @@ body {
 
 ::-moz-selection {
   color: $white;
-  background: $component-active-color;
+  background: $component-active-bg;
 }
 
 ::selection {
   color: $white;
-  background: $component-active-color;
+  background: $component-active-bg;
 }
 
 pre {
   overflow: auto;
   padding: $spacer / 2;
 
+  color: $gray-500;
+  font-family: $font-family-monospace;
   font-size: map-get($font-sizes, 'md');
   white-space: pre-wrap;
 
-  background: $gray-900;
+  background: $gray-200;
   border-radius: $border-radius;
 }
 
