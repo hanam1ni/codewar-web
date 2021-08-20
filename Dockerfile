@@ -35,6 +35,16 @@ RUN mix release
 #
 FROM alpine:${RELEASE_IMAGE_VERSION} AS app
 
+ARG DATABASE_URL
+ARG HOST
+ARG PORT
+ARG SECRET_KEY_BASE
+
+ENV DATABASE_URL=${DATABASE_URL}
+ENV HOST=${HOST}
+ENV PORT=${PORT}
+ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
+
 RUN apk update && \
     apk add --no-cache \
     libstdc++ \
@@ -52,6 +62,6 @@ RUN addgroup -g 1000 appuser && \
 COPY --from=build --chown=1000:1000 /app/_build/prod/rel/codewar ./
 COPY bin/start.sh ./bin/start.sh
 
-USER app_user
+USER appuser
 
 CMD bin/start.sh
