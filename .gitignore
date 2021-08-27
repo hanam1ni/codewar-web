@@ -38,3 +38,9 @@ npm-debug.log
 
 # IDE
 .idea
+
+.DS_Store
+
+# Terraform files
+infra/staging/.terraform/
+infra/staging/terraform*.backup
