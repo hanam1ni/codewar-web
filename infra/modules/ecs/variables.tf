@@ -2,6 +2,10 @@ variable "namespace" {
   type = string
 }
 
+variable "region" {
+  type = string
+}
+
 variable "aws_ecr_repository_url" {
   description = "Amazon ECR repository URL"
 }

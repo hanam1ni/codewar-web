@@ -79,6 +79,7 @@ module "ecs" {
 
   subnets                       = module.vpc.private_subnet_ids
   namespace                     = var.app_name
+  region                        = var.region
   security_groups               = module.security_group.ecs_security_group_ids
   alb_target_group_arn          = module.alb.alb_target_group_arn
   aws_ecr_repository_url        = module.ecr.repository_url

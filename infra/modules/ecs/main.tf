@@ -1,8 +1,9 @@
 data "template_file" "main" {
-  template = file("service.json.tpl")
+  template = file("${path.root}/../task_definitions/service.json.tpl"))
 
   vars = {
     namespace                     = var.namespace
+    region                        = var.region
     tag                           = "latest"
     app_port                      = 80
     aws_ecr_repository            = var.aws_ecr_repository_url
