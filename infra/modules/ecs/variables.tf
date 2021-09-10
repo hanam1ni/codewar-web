@@ -8,6 +8,7 @@ variable "region" {
 
 variable "aws_ecr_repository_url" {
   description = "Amazon ECR repository URL"
+  default = "301618631622.dkr.ecr.ap-southeast-1.amazonaws.com/codewar-web-growth"
 }
 
 variable "subnets" {
@@ -38,6 +39,10 @@ variable "desired_count" {
 
 variable "aws_cloudwatch_log_group_name" {
   description = "AWS CloudWatch Log Group name"
+}
+
+variable "aws_parameter_store" {
+  default = "arn:aws:ssm:ap-southeast-1:301618631622:parameter/codewar-web/staging"
 }
 
 variable "owner" {

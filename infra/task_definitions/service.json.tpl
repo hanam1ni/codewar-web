@@ -7,10 +7,10 @@
     "cpu": 1,
     "portMappings": [
       {
-        "containerPort": "${app_port}",
-        "hostPort": "${app_port}"
+        "containerPort": ${app_port},
+        "hostPort": ${app_port}
       }
-    ]
+    ],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -38,5 +38,6 @@
         "name": "SECRET_KEY_BASE",
         "valueFrom": "${aws_parameter_store}/SECRET_KEY_BASE"
       }
+    ]
   }
 ]

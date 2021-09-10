@@ -1,5 +1,5 @@
 data "template_file" "main" {
-  template = file("${path.root}/../task_definitions/service.json.tpl"))
+  template = file("${path.root}/../task_definitions/service.json.tpl")
 
   vars = {
     namespace                     = var.namespace
@@ -7,6 +7,7 @@ data "template_file" "main" {
     tag                           = "latest"
     app_port                      = 80
     aws_ecr_repository            = var.aws_ecr_repository_url
+    aws_parameter_store           = var.aws_parameter_store
     aws_cloudwatch_log_group_name = var.aws_cloudwatch_log_group_name
   }
 }
