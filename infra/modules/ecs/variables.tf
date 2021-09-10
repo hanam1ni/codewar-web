@@ -8,7 +8,6 @@ variable "region" {
 
 variable "aws_ecr_repository_url" {
   description = "Amazon ECR repository URL"
-  default = "301618631622.dkr.ecr.ap-southeast-1.amazonaws.com/codewar-web-growth"
 }
 
 variable "subnets" {

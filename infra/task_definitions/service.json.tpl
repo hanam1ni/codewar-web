@@ -22,7 +22,7 @@
     "environment": [
       {
         "name": "HOST",
-        "value": "production"
+        "value": "codewar-web-staging-alb-11830061.ap-southeast-1.elb.amazonaws.com"
       },
       {
         "name": "PORT",
