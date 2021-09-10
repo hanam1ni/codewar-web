@@ -36,7 +36,7 @@ resource "aws_lb_target_group" "main" {
     interval            = "5"
     protocol            = "HTTP"
     matcher             = "200-299"
-    timeout             = "5"
+    timeout             = "3"
     path                = "/"
     port                = 4000
     unhealthy_threshold = "2"
