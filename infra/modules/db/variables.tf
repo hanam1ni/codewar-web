@@ -3,7 +3,7 @@ variable "namespace" {
 }
 
 variable "engine" {
-  default = "postgresql"
+  default = "postgres"
 }
 
 variable "engine_version" {
@@ -47,7 +47,7 @@ variable "publicly_accessible" {
 }
 
 variable "storage_encrypted" {
-  default = true
+  default = false
 }
 
 variable "create_random_password" {

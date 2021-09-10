@@ -2,11 +2,13 @@ module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 3.0"
 
-  name = "${var.namespace}-rds-db"
+  name = "${var.database_name}"
   identifier = "${var.namespace}-rds-db"
 
   engine         = var.engine
   engine_version = var.engine_version
+  major_engine_version = var.engine_version
+  allocated_storage = 5
 
   subnet_ids = var.subnet_ids
 
@@ -29,4 +31,8 @@ module "db" {
   tags = {
     Owner = var.owner
   }
+
+  family = "postgres11"
 }
+
+

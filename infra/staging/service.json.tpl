@@ -26,15 +26,7 @@
     ],
     "secrets": [
     ],
-    "ulimits": [
-      {
-        "name": "nofile",
-        "softLimit": 65536,
-        "hardLimit": 65536
-      }
-    ],
     "mountPoints": [],
-    "memory": 900,
     "volumesFrom": []
   }
 ]

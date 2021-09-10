@@ -63,22 +63,22 @@ resource "aws_security_group_rule" "ecs_fargate_ingress_alb" {
   source_security_group_id = aws_security_group.alb.id
 }
 
-// Aurora
-resource "aws_security_group" "aurora" {
-  name        = "${var.namespace}-aurora"
-  description = "Aurora Security Group"
+// RDS
+resource "aws_security_group" "rds" {
+  name        = "${var.namespace}-rds"
+  description = "RDS Security Group"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name        = "${var.namespace}-aurora-sg"
+    Name        = "${var.namespace}-rds-sg"
     Owner       = var.owner
     Environment = var.environment
   }
 }
 
-resource "aws_security_group_rule" "aurora_ingress_app_instance" {
+resource "aws_security_group_rule" "rds_ingress_app_instance" {
   type                     = "ingress"
-  security_group_id        = aws_security_group.aurora.id
+  security_group_id        = aws_security_group.rds.id
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"

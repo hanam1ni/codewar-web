@@ -20,7 +20,7 @@ variable "rds_instance_type" {
 }
 
 variable "rds_database_name" {
-  default = "codewar_web_staging"
+  default = "codewarWeb"
 }
 
 variable "rds_username" {

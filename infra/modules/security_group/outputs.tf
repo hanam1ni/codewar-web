@@ -8,7 +8,7 @@ output "ecs_security_group_ids" {
   value       = [aws_security_group.ecs_fargate.id]
 }
 
-output "aurora_security_group_ids" {
+output "rds_security_group_ids" {
   description = "Security group IDs for Aurora"
-  value       = [aws_security_group.aurora.id]
+  value       = [aws_security_group.rds.id]
 }

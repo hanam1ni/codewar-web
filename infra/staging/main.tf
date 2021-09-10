@@ -45,7 +45,7 @@ module "db" {
 
   namespace = var.app_name
 
-  vpc_security_group_ids = module.security_group.aurora_security_group_ids
+  vpc_security_group_ids = module.security_group.rds_security_group_ids
   vpc_id                 = module.vpc.vpc_id
 
   subnet_ids = module.vpc.private_subnet_ids

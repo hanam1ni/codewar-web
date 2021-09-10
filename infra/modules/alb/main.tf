@@ -10,11 +10,6 @@ resource "aws_lb" "main" {
   tags = {
     Owner = var.owner
   }
-
-  access_logs {
-    bucket  = "${var.namespace}-alb-logs"
-    enabled = true
-  }
 }
 
 resource "aws_lb_listener" "http_forward" {
