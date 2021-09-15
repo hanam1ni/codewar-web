@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - chore/setup-deploy-staging-workflow
   workflow_dispatch:
 
 env:
