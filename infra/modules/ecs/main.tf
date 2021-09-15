@@ -5,9 +5,10 @@ data "template_file" "main" {
     namespace                     = var.namespace
     region                        = var.region
     tag                           = "latest"
-    app_port                      = 4000
+    app_host                      = var.app_host
+    app_port                      = var.app_port
     aws_ecr_repository            = var.aws_ecr_repository_url
-    aws_parameter_store           = var.aws_parameter_store
+    aws_parameter_store           = var.aws_ssm_parameter_arn
     aws_cloudwatch_log_group_name = var.aws_cloudwatch_log_group_name
   }
 }

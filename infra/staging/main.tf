@@ -80,12 +80,16 @@ module "ecs" {
   subnets                       = module.vpc.private_subnet_ids
   namespace                     = var.app_name
   region                        = var.region
+  app_host                      = module.alb.alb_dns_name
+  app_port                      = 4000
   security_groups               = module.security_group.ecs_security_group_ids
   alb_target_group_arn          = module.alb.alb_target_group_arn
   aws_ecr_repository_url        = module.ecr.repository_url
   aws_cloudwatch_log_group_name = module.log.aws_cloudwatch_log_group_name
+  aws_ssm_parameter_arn         = var.aws_ssm_parameter_arn
   desired_count                 = var.ecs_desired_count
   cpu                           = var.ecs_cpu
   memory                        = var.ecs_memory
   owner                         = var.owner
+  environment                   = var.environment
 }

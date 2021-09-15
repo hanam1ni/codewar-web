@@ -22,7 +22,7 @@
     "environment": [
       {
         "name": "HOST",
-        "value": "codewar-web-staging-alb-11830061.ap-southeast-1.elb.amazonaws.com"
+        "value": "${app_host}"
       },
       {
         "name": "PORT",
@@ -37,6 +37,14 @@
       {
         "name": "SECRET_KEY_BASE",
         "valueFrom": "${aws_parameter_store}/SECRET_KEY_BASE"
+      },
+      {
+        "name": "BASIC_AUTH_USERNAME",
+        "valueFrom": "${aws_parameter_store}/BASIC_AUTH_USERNAME"
+      },
+      {
+        "name": "BASIC_AUTH_PASSWORD",
+        "valueFrom": "${aws_parameter_store}/BASIC_AUTH_PASSWORD"
       }
     ]
   }

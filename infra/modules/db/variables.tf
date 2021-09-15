@@ -7,7 +7,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "11.9"
+  default = "11.12"
 }
 
 variable "instance_type" {

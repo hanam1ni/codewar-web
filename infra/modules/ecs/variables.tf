@@ -6,8 +6,20 @@ variable "region" {
   type = string
 }
 
+variable "app_host" {
+  description = "Application host name"
+}
+
+variable "app_port" {
+  description = "Application port"
+}
+
 variable "aws_ecr_repository_url" {
   description = "Amazon ECR repository URL"
+}
+
+variable "aws_ssm_parameter_arn" {
+  description = "Amazon SSM Parameter Store"
 }
 
 variable "subnets" {
@@ -40,10 +52,10 @@ variable "aws_cloudwatch_log_group_name" {
   description = "AWS CloudWatch Log Group name"
 }
 
-variable "aws_parameter_store" {
-  default = "arn:aws:ssm:ap-southeast-1:301618631622:parameter/codewar-web/staging"
+variable "owner" {
+  type = string
 }
 
-variable "owner" {
+variable "environment" {
   type = string
 }
