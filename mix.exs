@@ -50,6 +50,7 @@ defmodule Codewar.MixProject do
       {:floki, ">= 0.27.0", only: :test},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+      {:libcluster, "~> 3.3"},
       {:mimic, "~> 1.4.0", [only: :test]},
       {:phoenix, "~> 1.5.9"},
       {:phoenix_ecto, "~> 4.1"},

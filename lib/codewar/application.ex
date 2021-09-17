@@ -6,6 +6,17 @@ defmodule Codewar.Application do
   use Application
 
   def start(_type, _args) do
+    topologies = [
+      codewar: [
+        strategy: Cluster.Strategy.DNSPoll,
+        config: [
+          polling_interval: 1000,
+          query: "codewar-web-staging.codewar-web-staging.local",
+          node_basename: "codewar-web-staging"
+        ]
+      ]
+    ]
+
     children = [
       # Start the Ecto repository
       Codewar.Repo,
@@ -14,7 +25,8 @@ defmodule Codewar.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Codewar.PubSub},
       # Start the Endpoint (http/https)
-      CodewarWeb.Endpoint
+      CodewarWeb.Endpoint,
+      {Cluster.Supervisor, [topologies, [name: Codewar.ClusterSupervisor]]}
       # Start a worker by calling: Codewar.Worker.start_link(arg)
       # {Codewar.Worker, arg}
     ]
