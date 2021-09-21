@@ -6,8 +6,6 @@ defmodule Codewar.Application do
   use Application
 
   def start(_type, _args) do
-    IO.inspect "STARTING APPLICATION AT #{Node.self()}"
-
     topologies = [
       codewar: [
         strategy: Cluster.Strategy.DNSPoll,

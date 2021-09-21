@@ -26,10 +26,11 @@ module "vpc" {
 module "security_group" {
   source = ".././modules/security_group"
 
-  namespace   = var.app_name
-  vpc_id      = module.vpc.vpc_id
-  owner       = var.owner
-  environment = var.environment
+  namespace                   = var.app_name
+  vpc_id                      = module.vpc.vpc_id
+  private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+  owner                       = var.owner
+  environment                 = var.environment
 }
 
 module "log" {
