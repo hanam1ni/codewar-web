@@ -58,8 +58,8 @@ resource "aws_security_group_rule" "ecs_fargate_ingress_alb" {
   type                     = "ingress"
   security_group_id        = aws_security_group.ecs_fargate.id
   protocol                 = "tcp"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = 4000
+  to_port                  = 4000
   source_security_group_id = aws_security_group.alb.id
 }
 

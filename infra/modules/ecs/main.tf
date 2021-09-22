@@ -1,11 +1,14 @@
 data "template_file" "main" {
-  template = file("service.json.tpl")
+  template = file("${path.root}/../task_definitions/service.json.tpl")
 
   vars = {
     namespace                     = var.namespace
+    region                        = var.region
     tag                           = "latest"
-    app_port                      = 80
+    app_host                      = var.app_host
+    app_port                      = var.app_port
     aws_ecr_repository            = var.aws_ecr_repository_url
+    aws_parameter_store           = var.aws_ssm_parameter_arn
     aws_cloudwatch_log_group_name = var.aws_cloudwatch_log_group_name
   }
 }
@@ -93,7 +96,7 @@ resource "aws_ecs_service" "main" {
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.namespace
-    container_port   = 80
+    container_port   = 4000
   }
 
   tags = {

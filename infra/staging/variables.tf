@@ -42,3 +42,7 @@ variable "ecs_memory" {
 variable "ecs_desired_count" {
   default = 2
 }
+
+variable "aws_ssm_parameter_arn" {
+  default = "arn:aws:ssm:ap-southeast-1:301618631622:parameter/codewar-web/staging"
+}
