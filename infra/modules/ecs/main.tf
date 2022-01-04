@@ -102,4 +102,9 @@ resource "aws_ecs_service" "main" {
   tags = {
     Owner = var.owner
   }
+
+  service_registries {
+    registry_arn =  var.aws_service_discovery_arn
+    container_name = var.namespace
+  }
 }

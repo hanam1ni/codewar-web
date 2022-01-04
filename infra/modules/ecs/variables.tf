@@ -59,3 +59,7 @@ variable "owner" {
 variable "environment" {
   type = string
 }
+
+variable "aws_service_discovery_arn" {
+  description = "AWS Service Discovery"
+}

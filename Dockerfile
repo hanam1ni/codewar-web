@@ -35,22 +35,15 @@ RUN mix release
 #
 FROM alpine:${RELEASE_IMAGE_VERSION} AS app
 
-ARG DATABASE_URL
-ARG HOST
-ARG PORT
-ARG SECRET_KEY_BASE
-
-ENV DATABASE_URL=${DATABASE_URL}
-ENV HOST=${HOST}
-ENV PORT=${PORT}
-ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
-
 RUN apk update && \
     apk add --no-cache \
     libstdc++ \
     libgcc \
     bash \
-    openssl-dev
+    openssl \ 
+    ncurses-libs \
+    curl \
+    jq
 
 WORKDIR /opt/app
 EXPOSE 4000

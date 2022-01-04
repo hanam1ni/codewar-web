@@ -26,10 +26,11 @@ module "vpc" {
 module "security_group" {
   source = ".././modules/security_group"
 
-  namespace   = var.app_name
-  vpc_id      = module.vpc.vpc_id
-  owner       = var.owner
-  environment = var.environment
+  namespace                   = var.app_name
+  vpc_id                      = module.vpc.vpc_id
+  private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+  owner                       = var.owner
+  environment                 = var.environment
 }
 
 module "log" {
@@ -92,4 +93,26 @@ module "ecs" {
   memory                        = var.ecs_memory
   owner                         = var.owner
   environment                   = var.environment
+  aws_service_discovery_arn     = aws_service_discovery_service.service_discovery.arn
+}
+
+resource "aws_service_discovery_private_dns_namespace" dns_namespace {
+  name        = "${var.app_name}.local"
+  description = "AWS Service Discovery Private DNS Namespace"
+  vpc         = module.vpc.vpc_id
+}
+
+resource "aws_service_discovery_service" service_discovery {
+  name = var.app_name
+
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.dns_namespace.id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
 }
